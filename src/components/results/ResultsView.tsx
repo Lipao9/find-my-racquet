@@ -83,7 +83,9 @@ export function ResultsView({ answers }: { answers: Answers }) {
           {state.kind === "failed" ? (
             <Button onClick={fetchRecommendations}>{t("retry")}</Button>
           ) : (
-            <Button render={<Link href="/quiz" />}>{t("retake")}</Button>
+            <Button nativeButton={false} render={<Link href="/quiz" />}>
+              {t("retake")}
+            </Button>
           )}
         </div>
       )}
@@ -106,7 +108,11 @@ export function ResultsView({ answers }: { answers: Answers }) {
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ShareButton />
-            <Button variant="outline" render={<Link href="/quiz" />}>
+            <Button
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/quiz" />}
+            >
               {t("retake")}
             </Button>
           </div>

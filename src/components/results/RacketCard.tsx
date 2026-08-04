@@ -72,6 +72,7 @@ export function RacketCard({
         <Button
           variant="outline"
           size="sm"
+          nativeButton={false}
           render={
             <a
               href={racket.productUrl}

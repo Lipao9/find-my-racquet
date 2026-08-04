@@ -23,7 +23,12 @@ export default function LandingPage({ params }: PageProps<"/[locale]">) {
         <p className="max-w-xl text-lg text-muted-foreground">
           {t("subtitle")}
         </p>
-        <Button size="lg" className="mt-2" render={<Link href="/quiz" />}>
+        <Button
+          size="lg"
+          className="mt-2"
+          nativeButton={false}
+          render={<Link href="/quiz" />}
+        >
           {t("cta")}
         </Button>
         <p className="text-sm text-muted-foreground">{t("duration")}</p>
