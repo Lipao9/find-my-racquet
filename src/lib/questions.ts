@@ -6,7 +6,6 @@ export type QuestionId =
   | "style"
   | "powerControl"
   | "armInjury"
-  | "budget"
   | "weightPref"
   | "headSizePref"
   | "gripSize"
@@ -73,12 +72,6 @@ export const QUESTIONS: Question[] = [
     kind: "choice",
     options: ["none", "past", "current"],
     modes: ["quick", "detailed"],
-  },
-  {
-    id: "budget",
-    kind: "choice",
-    options: ["under-150", "150-250", "over-250"],
-    modes: ["quick"],
   },
   {
     id: "weightPref",

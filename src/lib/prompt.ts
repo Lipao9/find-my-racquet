@@ -60,7 +60,6 @@ const ANSWER_LABELS: Record<keyof Answers | string, string> = {
   style: "Playing style",
   powerControl: "Power vs control priority",
   armInjury: "Arm/elbow/shoulder injury history",
-  budget: "Budget (USD)",
   weightPref: "Weight preference",
   headSizePref: "Head size preference",
   gripSize: "Grip size",
@@ -86,7 +85,6 @@ function racketLine(r: Racket, index: number): string {
     r.stringPattern,
     r.swingweight !== null ? `SW ${r.swingweight}` : "SW n/a",
     `balance ${r.balance}`,
-    `$${r.priceUSD}`,
   ];
   return parts.join(" | ");
 }
@@ -102,5 +100,5 @@ export function buildUserMessage(
 
   const list = candidates.map(racketLine).join("\n");
 
-  return `Player profile:\n${profile}\n\nCandidate racquets (id | name | head size | weight | stiffness | pattern | swingweight | balance | price):\n${list}`;
+  return `Player profile:\n${profile}\n\nCandidate racquets (id | name | head size | weight | stiffness | pattern | swingweight | balance):\n${list}`;
 }

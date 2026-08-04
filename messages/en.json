@@ -19,7 +19,7 @@
     "errorTitle": "Something went wrong",
     "errorHint": "We couldn't generate your recommendations right now. Please try again in a moment.",
     "noCandidatesTitle": "No racquets found",
-    "noCandidatesHint": "We couldn't find racquets matching all your answers — try adjusting your budget or preferences."
+    "noCandidatesHint": "We couldn't find racquets matching all your answers — try adjusting your preferences."
   },
   "quiz": {
     "modes": {
@@ -28,8 +28,8 @@
       "quick": {
         "title": "Quick quiz",
         "duration": "~3 min",
-        "description": "12 multiple-choice questions.",
-        "detail": "Great for a first recommendation: level, style, preferences and budget."
+        "description": "11 multiple-choice questions.",
+        "detail": "Great for a first recommendation: level, style and preferences."
       },
       "detailed": {
         "title": "Detailed quiz",
@@ -86,14 +86,6 @@
           "none": "No, never",
           "past": "In the past, but recovered",
           "current": "Current pain or active injury"
-        }
-      },
-      "budget": {
-        "title": "What's your budget?",
-        "options": {
-          "under_150": "Under $150",
-          "150_250": "$150 to $250",
-          "over_250": "Over $250"
         }
       },
       "weightPref": {

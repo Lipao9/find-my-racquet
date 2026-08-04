@@ -18,11 +18,6 @@ type HardFilter = {
   test: (r: Racket, a: Answers) => boolean;
 };
 
-const BUDGET_CAPS: Record<string, number> = {
-  "under-150": 150,
-  "150-250": 250,
-};
-
 const WEIGHT_BANDS: Record<string, [number, number]> = {
   light: [0, 290],
   medium: [285, 310],
@@ -38,14 +33,6 @@ const SKILL_BANDS: Record<string, [number, number]> = {
 
 // Ordered: the LAST relaxable filter is dropped first when candidates run low.
 const HARD_FILTERS: HardFilter[] = [
-  {
-    name: "budget",
-    relaxable: false,
-    test: (r, a) => {
-      const cap = BUDGET_CAPS[a.budget ?? ""];
-      return cap === undefined || r.priceUSD <= cap;
-    },
-  },
   {
     name: "armInjury",
     relaxable: false,

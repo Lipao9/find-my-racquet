@@ -19,7 +19,7 @@
     "errorTitle": "Algo deu errado",
     "errorHint": "Não conseguimos gerar suas recomendações agora. Tente novamente em instantes.",
     "noCandidatesTitle": "Nenhuma raquete encontrada",
-    "noCandidatesHint": "Não encontramos raquetes que atendam a todas as suas respostas — tente ajustar o orçamento ou as preferências."
+    "noCandidatesHint": "Não encontramos raquetes que atendam a todas as suas respostas — tente ajustar as preferências."
   },
   "quiz": {
     "modes": {
@@ -28,8 +28,8 @@
       "quick": {
         "title": "Quiz rápido",
         "duration": "~3 min",
-        "description": "12 perguntas de múltipla escolha.",
-        "detail": "Ideal para uma primeira recomendação: nível, estilo, preferências e orçamento."
+        "description": "11 perguntas de múltipla escolha.",
+        "detail": "Ideal para uma primeira recomendação: nível, estilo e preferências."
       },
       "detailed": {
         "title": "Quiz detalhado",
@@ -86,14 +86,6 @@
           "none": "Não, nunca tive",
           "past": "Já tive, mas estou recuperado",
           "current": "Tenho dores ou lesão ativa"
-        }
-      },
-      "budget": {
-        "title": "Qual é o seu orçamento?",
-        "options": {
-          "under_150": "Até US$ 150",
-          "150_250": "Entre US$ 150 e US$ 250",
-          "over_250": "Acima de US$ 250"
         }
       },
       "weightPref": {
