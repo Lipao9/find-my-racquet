@@ -42,11 +42,16 @@ export function QuizWizard({ mode }: { mode: QuizMode }) {
         <Progress value={((step + 1) / questions.length) * 100} />
       </div>
 
-      <QuestionCard
-        question={question}
-        value={value}
-        onChange={(v) => setAnswers((a) => ({ ...a, [question.id]: v }))}
-      />
+      <div
+        key={question.id}
+        className="animate-in fade-in slide-in-from-right-4 duration-300"
+      >
+        <QuestionCard
+          question={question}
+          value={value}
+          onChange={(v) => setAnswers((a) => ({ ...a, [question.id]: v }))}
+        />
+      </div>
 
       <div className="mt-auto flex justify-between gap-4 pt-4">
         <Button

@@ -1,9 +1,16 @@
 {
   "landing": {
-    "title": "Find the perfect tennis racquet for your game",
-    "subtitle": "Answer a quick quiz about your level, style and preferences, and get 3 racquets picked just for you.",
+    "kicker": "AI-powered recommendations",
+    "title": "The <em>perfect</em> racquet for your game",
+    "subtitle": "Answer a quiz about your level, style and preferences, and get 3 racquets picked just for you — with the why behind each one.",
     "cta": "Start the quiz",
-    "duration": "3-minute quick quiz or 7-minute detailed one"
+    "ctaDetailed": "I prefer the detailed quiz",
+    "duration": "3-minute quick quiz or 7-minute detailed one",
+    "stats": {
+      "racquets": "racquets analyzed",
+      "brands": "brands",
+      "picks": "tailored picks"
+    }
   },
   "results": {
     "analyzing": "Analyzing your profile…",
@@ -25,6 +32,7 @@
     "modes": {
       "title": "How do you want to answer?",
       "subtitle": "Both get you 3 racquets — the detailed one understands your game more deeply.",
+      "choose": "Choose this one",
       "quick": {
         "title": "Quick quiz",
         "duration": "~3 min",

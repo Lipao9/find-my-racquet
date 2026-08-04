@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { QuizWizard } from "@/components/quiz/QuizWizard";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { QUIZ_MODES, type QuizMode } from "@/lib/questions";
 
 export default async function QuizWizardPage({
@@ -18,6 +19,7 @@ export default async function QuizWizardPage({
     <main className="flex flex-1 flex-col">
       <SiteHeader />
       <QuizWizard mode={mode as QuizMode} />
+      <SiteFooter />
     </main>
   );
 }

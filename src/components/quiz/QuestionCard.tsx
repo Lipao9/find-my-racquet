@@ -16,7 +16,7 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl font-semibold tracking-tight">
+        <h2 className="font-heading text-3xl font-semibold tracking-tight">
           {t(`questions.${question.id}.title`)}
           {question.optional && (
             <span className="ml-2 text-sm font-normal text-muted-foreground">
@@ -59,8 +59,10 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
           {question.options.map((option) => (
             <label
               key={option}
-              className={`flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors hover:bg-accent ${
-                value === option ? "border-primary bg-accent" : "border-input"
+              className={`flex cursor-pointer items-center gap-3 rounded-xl border p-4 transition-all duration-150 hover:-translate-y-0.5 hover:border-primary/50 hover:bg-accent/60 hover:shadow-sm ${
+                value === option
+                  ? "border-primary bg-accent shadow-sm shadow-primary/10"
+                  : "border-input bg-card/60"
               }`}
             >
               <RadioGroupItem value={option} />

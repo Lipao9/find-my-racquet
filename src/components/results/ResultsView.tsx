@@ -64,7 +64,9 @@ export function ResultsView({
       {state.status === "loading" && (
         <>
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-semibold">{t("analyzing")}</h1>
+            <h1 className="font-heading text-3xl font-semibold">
+              {t("analyzing")}
+            </h1>
             <p className="text-muted-foreground">{t("analyzingHint")}</p>
           </div>
           <div className="flex flex-col gap-6">
@@ -77,7 +79,7 @@ export function ResultsView({
 
       {state.status === "error" && (
         <div className="flex flex-1 flex-col items-center justify-center gap-4 text-center">
-          <h1 className="text-2xl font-semibold">
+          <h1 className="font-heading text-3xl font-semibold">
             {state.kind === "no_candidates"
               ? t("noCandidatesTitle")
               : t("errorTitle")}
@@ -99,18 +101,25 @@ export function ResultsView({
 
       {state.status === "success" && (
         <>
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+          <div className="animate-in fade-in slide-in-from-bottom-3 flex flex-col items-center gap-2 text-center duration-500">
+            <h1 className="font-heading text-4xl font-semibold tracking-tight">
+              {t("title")}
+            </h1>
             <p className="text-muted-foreground">{t("subtitle")}</p>
           </div>
           <div className="flex flex-col gap-6">
             {state.recommendations.map((rec, i) => (
-              <RacketCard
+              <div
                 key={rec.racket.id}
-                racket={rec.racket}
-                justification={rec.justification}
-                isBestMatch={i === 0}
-              />
+                className="animate-in fade-in slide-in-from-bottom-4 duration-700"
+                style={{ animationDelay: `${i * 120}ms`, animationFillMode: "backwards" }}
+              >
+                <RacketCard
+                  racket={rec.racket}
+                  justification={rec.justification}
+                  rank={i + 1}
+                />
+              </div>
             ))}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">

@@ -1,9 +1,16 @@
 {
   "landing": {
-    "title": "Encontre a raquete de tênis perfeita para o seu jogo",
-    "subtitle": "Responda um quiz rápido sobre seu nível, estilo e preferências, e receba 3 raquetes escolhidas sob medida para você.",
+    "kicker": "Recomendação com inteligência artificial",
+    "title": "A raquete <em>perfeita</em> para o seu jogo",
+    "subtitle": "Responda um quiz sobre seu nível, estilo e preferências, e receba 3 raquetes escolhidas sob medida — com o porquê de cada uma.",
     "cta": "Começar o quiz",
-    "duration": "Quiz rápido de 3 minutos ou detalhado de 7"
+    "ctaDetailed": "Prefiro o quiz detalhado",
+    "duration": "Quiz rápido de 3 minutos ou detalhado de 7",
+    "stats": {
+      "racquets": "raquetes analisadas",
+      "brands": "marcas",
+      "picks": "escolhas sob medida"
+    }
   },
   "results": {
     "analyzing": "Analisando seu perfil…",
@@ -25,6 +32,7 @@
     "modes": {
       "title": "Como você quer responder?",
       "subtitle": "Os dois chegam em 3 raquetes — o detalhado entende seu jogo mais a fundo.",
+      "choose": "Escolher este",
       "quick": {
         "title": "Quiz rápido",
         "duration": "~3 min",
