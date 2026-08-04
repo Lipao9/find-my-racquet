@@ -1,0 +1,136 @@
+{
+  "landing": {
+    "title": "Encontre a raquete de tênis perfeita para o seu jogo",
+    "subtitle": "Responda um quiz rápido sobre seu nível, estilo e preferências, e receba 3 raquetes escolhidas sob medida para você.",
+    "cta": "Começar o quiz",
+    "duration": "Leva menos de 3 minutos"
+  },
+  "results": {
+    "analyzing": "Analisando seu perfil…",
+    "analyzingHint": "Estamos escolhendo as raquetes ideais para o seu jogo.",
+    "title": "Suas 3 raquetes recomendadas",
+    "subtitle": "Escolhidas com base nas suas respostas.",
+    "bestMatch": "Melhor escolha",
+    "viewProduct": "Ver na Tennis Warehouse",
+    "share": "Compartilhar resultado",
+    "linkCopied": "Link copiado!",
+    "retake": "Refazer o quiz",
+    "retry": "Tentar de novo",
+    "errorTitle": "Algo deu errado",
+    "errorHint": "Não conseguimos gerar suas recomendações agora. Tente novamente em instantes.",
+    "noCandidatesTitle": "Nenhuma raquete encontrada",
+    "noCandidatesHint": "Não encontramos raquetes que atendam a todas as suas respostas — tente ajustar o orçamento ou as preferências."
+  },
+  "quiz": {
+    "progress": "Pergunta {current} de {total}",
+    "back": "Voltar",
+    "next": "Próxima",
+    "finish": "Ver minhas raquetes",
+    "optional": "(opcional)",
+    "questions": {
+      "skill": {
+        "title": "Qual é o seu nível de jogo?",
+        "options": {
+          "beginner": "Iniciante — estou aprendendo os fundamentos",
+          "intermediate": "Intermediário — troco bolas com consistência",
+          "advanced": "Avançado — jogo com técnica e estratégia",
+          "competitive": "Competitivo — disputo torneios regularmente"
+        }
+      },
+      "frequency": {
+        "title": "Com que frequência você joga?",
+        "options": {
+          "occasional": "De vez em quando",
+          "weekly": "1x por semana",
+          "several_times": "2-3x por semana",
+          "daily": "Quase todo dia"
+        }
+      },
+      "style": {
+        "title": "Qual é o seu estilo de jogo?",
+        "options": {
+          "baseline": "Fundo de quadra — construo pontos com trocas",
+          "serve_volley": "Saque e voleio — busco a rede",
+          "all_court": "Quadra toda — me adapto ao ponto",
+          "counterpuncher": "Contra-atacante — devolvo tudo e espero o erro"
+        }
+      },
+      "powerControl": {
+        "title": "O que você prioriza na raquete?",
+        "options": {
+          "power": "Potência — quero mais força nos golpes",
+          "balanced": "Equilíbrio entre potência e controle",
+          "control": "Controle — quero precisão na colocação"
+        }
+      },
+      "armInjury": {
+        "title": "Você tem histórico de lesão no braço, cotovelo ou ombro?",
+        "description": "Isso influencia a rigidez da raquete recomendada.",
+        "options": {
+          "none": "Não, nunca tive",
+          "past": "Já tive, mas estou recuperado",
+          "current": "Tenho dores ou lesão ativa"
+        }
+      },
+      "budget": {
+        "title": "Qual é o seu orçamento?",
+        "options": {
+          "under_150": "Até US$ 150",
+          "150_250": "Entre US$ 150 e US$ 250",
+          "over_250": "Acima de US$ 250"
+        }
+      },
+      "weightPref": {
+        "title": "Que peso de raquete você prefere?",
+        "options": {
+          "light": "Leve — fácil de manobrar (menos de 290g)",
+          "medium": "Médio — equilíbrio geral (285-310g)",
+          "heavy": "Pesado — mais estabilidade (acima de 305g)",
+          "no_preference": "Não tenho preferência"
+        }
+      },
+      "headSizePref": {
+        "title": "Qual tamanho de cabeça você prefere?",
+        "options": {
+          "midsize": "Menor (até 98 in²) — mais controle",
+          "midplus": "Médio (100 in²) — o mais comum",
+          "oversize": "Grande (105+ in²) — mais tolerância a erros",
+          "no_preference": "Não tenho preferência"
+        }
+      },
+      "gripSize": {
+        "title": "Qual é o tamanho do seu grip (empunhadura)?",
+        "options": {
+          "1": "L1 (4 1/8)",
+          "2": "L2 (4 1/4)",
+          "3": "L3 (4 3/8)",
+          "4": "L4 (4 1/2)",
+          "5": "L5 (4 5/8)",
+          "unknown": "Não sei"
+        }
+      },
+      "stringPattern": {
+        "title": "Que padrão de cordas você prefere?",
+        "options": {
+          "open": "Aberto (16x19) — mais spin e potência",
+          "dense": "Fechado (18x20) — mais controle e durabilidade",
+          "no_preference": "Não tenho preferência"
+        }
+      },
+      "currentRacquet": {
+        "title": "Qual raquete você usa hoje?",
+        "description": "Ajuda a entender no que você já está acostumado.",
+        "placeholder": "Ex.: Babolat Pure Drive 2021"
+      },
+      "courtType": {
+        "title": "Em que tipo de quadra você mais joga?",
+        "options": {
+          "hard": "Rápida (cimento/acrílico)",
+          "clay": "Saibro",
+          "grass": "Grama",
+          "mixed": "Vários tipos"
+        }
+      }
+    }
+  }
+}

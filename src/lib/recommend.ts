@@ -1,0 +1,121 @@
+import Anthropic from "@anthropic-ai/sdk";
+import { z } from "zod";
+import type { Answers } from "./answers";
+import type { Racket } from "./catalog";
+import {
+  buildSystemPrompt,
+  buildUserMessage,
+  RECOMMEND_MODEL,
+  recommendTool,
+} from "./prompt";
+
+export class RecommendationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "RecommendationError";
+  }
+}
+
+export interface Pick {
+  racketId: string;
+  justification: string;
+}
+
+const toolOutputSchema = z.object({
+  recommendations: z
+    .array(
+      z.object({
+        racket_id: z.string(),
+        justification: z.string().min(1),
+      }),
+    )
+    .min(3),
+});
+
+let client: Anthropic | null = null;
+
+function getClient(): Anthropic {
+  client ??= new Anthropic(); // reads ANTHROPIC_API_KEY; throws if missing
+  return client;
+}
+
+async function callModel(
+  messages: Anthropic.MessageParam[],
+  locale: "pt-BR" | "en",
+): Promise<Pick[]> {
+  const response = await getClient().messages.create({
+    model: RECOMMEND_MODEL,
+    max_tokens: 2048,
+    system: buildSystemPrompt(locale),
+    tools: [recommendTool],
+    tool_choice: { type: "tool", name: "recommend_rackets" },
+    messages,
+  });
+
+  const toolUse = response.content.find(
+    (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
+  );
+  if (!toolUse) {
+    throw new RecommendationError("Model returned no tool_use block");
+  }
+
+  const parsed = toolOutputSchema.safeParse(toolUse.input);
+  if (!parsed.success) {
+    throw new RecommendationError(
+      `Tool output failed validation: ${parsed.error.message}`,
+    );
+  }
+  return parsed.data.recommendations.map((r) => ({
+    racketId: r.racket_id,
+    justification: r.justification,
+  }));
+}
+
+function validatePicks(picks: Pick[], validIds: Set<string>): string[] {
+  const seen = new Set<string>();
+  const invalid: string[] = [];
+  for (const p of picks.slice(0, 3)) {
+    if (!validIds.has(p.racketId) || seen.has(p.racketId)) {
+      invalid.push(p.racketId);
+    }
+    seen.add(p.racketId);
+  }
+  return invalid;
+}
+
+export async function recommend(
+  candidates: Racket[],
+  answers: Answers,
+  locale: "pt-BR" | "en",
+): Promise<Pick[]> {
+  const validIds = new Set(candidates.map((r) => r.id));
+  const userMessage = buildUserMessage(candidates, answers);
+  const messages: Anthropic.MessageParam[] = [
+    { role: "user", content: userMessage },
+  ];
+
+  let picks = await callModel(messages, locale);
+  let invalid = validatePicks(picks, validIds);
+  if (invalid.length > 0) {
+    // One corrective retry: restate the valid ids and ask again.
+    messages.push(
+      {
+        role: "assistant",
+        content: `Previous attempt used invalid or duplicate racket_id values: ${invalid.join(", ")}.`,
+      },
+      {
+        role: "user",
+        content: `Some racket_id values were not in the candidate list. Pick again using ONLY these exact ids, no duplicates: ${[...validIds].join(", ")}`,
+      },
+    );
+    picks = await callModel(messages, locale);
+    invalid = validatePicks(picks, validIds);
+    if (invalid.length > 0) {
+      throw new RecommendationError(
+        `Model returned invalid ids after retry: ${invalid.join(", ")}`,
+      );
+    }
+  }
+
+  return picks.slice(0, 3);
+}

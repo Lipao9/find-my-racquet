@@ -1,0 +1,136 @@
+{
+  "landing": {
+    "title": "Find the perfect tennis racquet for your game",
+    "subtitle": "Answer a quick quiz about your level, style and preferences, and get 3 racquets picked just for you.",
+    "cta": "Start the quiz",
+    "duration": "Takes less than 3 minutes"
+  },
+  "results": {
+    "analyzing": "Analyzing your profile…",
+    "analyzingHint": "We're picking the ideal racquets for your game.",
+    "title": "Your 3 recommended racquets",
+    "subtitle": "Picked based on your answers.",
+    "bestMatch": "Best match",
+    "viewProduct": "View at Tennis Warehouse",
+    "share": "Share result",
+    "linkCopied": "Link copied!",
+    "retake": "Retake the quiz",
+    "retry": "Try again",
+    "errorTitle": "Something went wrong",
+    "errorHint": "We couldn't generate your recommendations right now. Please try again in a moment.",
+    "noCandidatesTitle": "No racquets found",
+    "noCandidatesHint": "We couldn't find racquets matching all your answers — try adjusting your budget or preferences."
+  },
+  "quiz": {
+    "progress": "Question {current} of {total}",
+    "back": "Back",
+    "next": "Next",
+    "finish": "See my racquets",
+    "optional": "(optional)",
+    "questions": {
+      "skill": {
+        "title": "What's your playing level?",
+        "options": {
+          "beginner": "Beginner — learning the fundamentals",
+          "intermediate": "Intermediate — consistent rallies",
+          "advanced": "Advanced — playing with technique and strategy",
+          "competitive": "Competitive — regular tournament player"
+        }
+      },
+      "frequency": {
+        "title": "How often do you play?",
+        "options": {
+          "occasional": "Once in a while",
+          "weekly": "Once a week",
+          "several_times": "2-3 times a week",
+          "daily": "Almost every day"
+        }
+      },
+      "style": {
+        "title": "What's your playing style?",
+        "options": {
+          "baseline": "Baseliner — building points from the back",
+          "serve_volley": "Serve and volley — rushing the net",
+          "all_court": "All-court — adapting to the point",
+          "counterpuncher": "Counterpuncher — getting everything back"
+        }
+      },
+      "powerControl": {
+        "title": "What do you prioritize in a racquet?",
+        "options": {
+          "power": "Power — more pace on my shots",
+          "balanced": "A balance of power and control",
+          "control": "Control — precise shot placement"
+        }
+      },
+      "armInjury": {
+        "title": "Any history of arm, elbow or shoulder injury?",
+        "description": "This influences the recommended racquet stiffness.",
+        "options": {
+          "none": "No, never",
+          "past": "In the past, but recovered",
+          "current": "Current pain or active injury"
+        }
+      },
+      "budget": {
+        "title": "What's your budget?",
+        "options": {
+          "under_150": "Under $150",
+          "150_250": "$150 to $250",
+          "over_250": "Over $250"
+        }
+      },
+      "weightPref": {
+        "title": "What racquet weight do you prefer?",
+        "options": {
+          "light": "Light — easy to maneuver (under 290g)",
+          "medium": "Medium — all-around balance (285-310g)",
+          "heavy": "Heavy — more stability (over 305g)",
+          "no_preference": "No preference"
+        }
+      },
+      "headSizePref": {
+        "title": "What head size do you prefer?",
+        "options": {
+          "midsize": "Smaller (up to 98 in²) — more control",
+          "midplus": "Mid-plus (100 in²) — the most common",
+          "oversize": "Oversize (105+ in²) — more forgiveness",
+          "no_preference": "No preference"
+        }
+      },
+      "gripSize": {
+        "title": "What's your grip size?",
+        "options": {
+          "1": "L1 (4 1/8)",
+          "2": "L2 (4 1/4)",
+          "3": "L3 (4 3/8)",
+          "4": "L4 (4 1/2)",
+          "5": "L5 (4 5/8)",
+          "unknown": "I don't know"
+        }
+      },
+      "stringPattern": {
+        "title": "What string pattern do you prefer?",
+        "options": {
+          "open": "Open (16x19) — more spin and power",
+          "dense": "Dense (18x20) — more control and durability",
+          "no_preference": "No preference"
+        }
+      },
+      "currentRacquet": {
+        "title": "What racquet do you use today?",
+        "description": "Helps us understand what you're used to.",
+        "placeholder": "E.g. Babolat Pure Drive 2021"
+      },
+      "courtType": {
+        "title": "What surface do you play on most?",
+        "options": {
+          "hard": "Hard court",
+          "clay": "Clay",
+          "grass": "Grass",
+          "mixed": "A mix of surfaces"
+        }
+      }
+    }
+  }
+}
