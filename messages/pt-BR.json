@@ -3,7 +3,7 @@
     "title": "Encontre a raquete de tênis perfeita para o seu jogo",
     "subtitle": "Responda um quiz rápido sobre seu nível, estilo e preferências, e receba 3 raquetes escolhidas sob medida para você.",
     "cta": "Começar o quiz",
-    "duration": "Leva menos de 3 minutos"
+    "duration": "Quiz rápido de 3 minutos ou detalhado de 7"
   },
   "results": {
     "analyzing": "Analisando seu perfil…",
@@ -22,6 +22,22 @@
     "noCandidatesHint": "Não encontramos raquetes que atendam a todas as suas respostas — tente ajustar o orçamento ou as preferências."
   },
   "quiz": {
+    "modes": {
+      "title": "Como você quer responder?",
+      "subtitle": "Os dois chegam em 3 raquetes — o detalhado entende seu jogo mais a fundo.",
+      "quick": {
+        "title": "Quiz rápido",
+        "duration": "~3 min",
+        "description": "12 perguntas de múltipla escolha.",
+        "detail": "Ideal para uma primeira recomendação: nível, estilo, preferências e orçamento."
+      },
+      "detailed": {
+        "title": "Quiz detalhado",
+        "duration": "~7 min",
+        "description": "18 perguntas, várias com resposta livre.",
+        "detail": "Conte sobre seu swing, seu spin, seus pontos fortes e o que quer evoluir — quanto mais contexto, mais precisa a recomendação."
+      }
+    },
     "progress": "Pergunta {current} de {total}",
     "back": "Voltar",
     "next": "Próxima",
@@ -130,6 +146,48 @@
           "grass": "Grama",
           "mixed": "Vários tipos"
         }
+      },
+      "swingSpeed": {
+        "title": "Como é a velocidade do seu swing?",
+        "description": "Swings mais rápidos aproveitam raquetes com mais controle; swings compactos pedem ajuda da raquete.",
+        "options": {
+          "compact": "Compacto — golpes curtos, preciso de potência da raquete",
+          "moderate": "Moderado — swing médio, equilibrado",
+          "fast": "Rápido — gero boa potência sozinho",
+          "very_fast": "Muito rápido — swing longo e agressivo"
+        }
+      },
+      "spinStyle": {
+        "title": "Como você usa efeito (spin) no seu jogo?",
+        "options": {
+          "heavy_topspin": "Muito topspin — bola alta e carregada",
+          "moderate_spin": "Spin moderado — misturo conforme o ponto",
+          "flat": "Bola chapada — golpes rasantes e diretos",
+          "slice": "Muito slice — variação e bola baixa"
+        }
+      },
+      "racquetFeel": {
+        "title": "O que você gosta e não gosta na sua raquete atual?",
+        "description": "Sensação no impacto, manobrabilidade, vibração, potência... fale com suas palavras.",
+        "placeholder": "Ex.: gosto do controle, mas sinto pouca potência no saque e ela vibra muito em bolas fora do centro"
+      },
+      "strengths": {
+        "title": "Quais são os pontos fortes do seu jogo?",
+        "description": "Golpes, táticas ou situações em que você joga melhor.",
+        "placeholder": "Ex.: forehand agressivo cruzado, saque consistente, leitura de jogo nas trocas longas"
+      },
+      "improveGoals": {
+        "title": "O que você mais quer melhorar ou sente falta no seu jogo?",
+        "placeholder": "Ex.: quero mais profundidade no backhand e me sinto travado na devolução de saques rápidos"
+      },
+      "physicalProfile": {
+        "title": "Como é o seu físico e condicionamento?",
+        "description": "Altura, força, resistência, idade — o que achar relevante.",
+        "placeholder": "Ex.: 1,78m, 34 anos, bom condicionamento, mas sinto o ombro após jogos longos"
+      },
+      "anythingElse": {
+        "title": "Algo mais que a gente deveria saber?",
+        "placeholder": "Ex.: jogo torneios da liga local, tenho duas raquetes e cordo com multifilamento a 24kg"
       }
     }
   }

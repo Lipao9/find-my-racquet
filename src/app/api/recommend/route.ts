@@ -1,21 +1,24 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { answersSchema } from "@/lib/answers";
+import { answersSchemaFor, quizModeSchema, type Answers } from "@/lib/answers";
 import { loadCatalog } from "@/lib/catalog";
 import { InsufficientCandidatesError, prefilter } from "@/lib/prefilter";
 import { recommend, RecommendationError } from "@/lib/recommend";
 
 export const maxDuration = 30;
 
-const requestSchema = z.object({
-  answers: answersSchema,
+const baseSchema = z.object({
+  mode: quizModeSchema.default("quick"),
   locale: z.enum(["pt-BR", "en"]),
 });
 
 export async function POST(req: Request) {
-  let body: z.infer<typeof requestSchema>;
+  let body: z.infer<typeof baseSchema> & { answers: Answers };
   try {
-    body = requestSchema.parse(await req.json());
+    const json = await req.json();
+    const base = baseSchema.parse(json);
+    const answers = answersSchemaFor(base.mode).parse(json.answers);
+    body = { ...base, answers };
   } catch (error) {
     const details = error instanceof z.ZodError ? error.issues : undefined;
     return NextResponse.json(

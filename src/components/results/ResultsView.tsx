@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
 import type { Answers } from "@/lib/answers";
 import type { Racket } from "@/lib/catalog";
+import type { QuizMode } from "@/lib/questions";
 import { RacketCard } from "./RacketCard";
 import { ShareButton } from "./ShareButton";
 
@@ -20,7 +21,13 @@ type State =
   | { status: "error"; kind: "no_candidates" | "failed" }
   | { status: "success"; recommendations: Recommendation[] };
 
-export function ResultsView({ answers }: { answers: Answers }) {
+export function ResultsView({
+  answers,
+  mode,
+}: {
+  answers: Answers;
+  mode: QuizMode;
+}) {
   const t = useTranslations("results");
   const locale = useLocale();
   const [state, setState] = useState<State>({ status: "loading" });
@@ -31,7 +38,7 @@ export function ResultsView({ answers }: { answers: Answers }) {
       const res = await fetch("/api/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers, locale }),
+        body: JSON.stringify({ answers, locale, mode }),
       });
       if (res.status === 422) {
         setState({ status: "error", kind: "no_candidates" });
@@ -46,7 +53,7 @@ export function ResultsView({ answers }: { answers: Answers }) {
     } catch {
       setState({ status: "error", kind: "failed" });
     }
-  }, [answers, locale]);
+  }, [answers, locale, mode]);
 
   useEffect(() => {
     fetchRecommendations();

@@ -42,7 +42,7 @@ const HARD_FILTERS: HardFilter[] = [
     name: "budget",
     relaxable: false,
     test: (r, a) => {
-      const cap = BUDGET_CAPS[a.budget];
+      const cap = BUDGET_CAPS[a.budget ?? ""];
       return cap === undefined || r.priceUSD <= cap;
     },
   },
@@ -62,7 +62,7 @@ const HARD_FILTERS: HardFilter[] = [
     name: "skillWeight",
     relaxable: true,
     test: (r, a) => {
-      const band = SKILL_BANDS[a.skill];
+      const band = SKILL_BANDS[a.skill ?? ""];
       if (!band) return true;
       return r.weightGrams >= band[0] && r.weightGrams <= band[1];
     },
@@ -71,7 +71,7 @@ const HARD_FILTERS: HardFilter[] = [
     name: "weightPref",
     relaxable: true,
     test: (r, a) => {
-      const band = WEIGHT_BANDS[a.weightPref];
+      const band = WEIGHT_BANDS[a.weightPref ?? ""];
       if (!band) return true; // no-preference
       return r.weightGrams >= band[0] && r.weightGrams <= band[1];
     },
@@ -84,11 +84,11 @@ function score(r: Racket, a: Answers): number {
   const dense = /18x20|16x20/.test(r.stringPattern);
 
   // Keep relaxed-away hard constraints influencing the ranking.
-  const weightBand = WEIGHT_BANDS[a.weightPref];
+  const weightBand = WEIGHT_BANDS[a.weightPref ?? ""];
   if (weightBand && r.weightGrams >= weightBand[0] && r.weightGrams <= weightBand[1]) {
     s += 3;
   }
-  const skillBand = SKILL_BANDS[a.skill];
+  const skillBand = SKILL_BANDS[a.skill ?? ""];
   if (skillBand && r.weightGrams >= skillBand[0] && r.weightGrams <= skillBand[1]) {
     s += 2;
   }
@@ -115,6 +115,13 @@ function score(r: Racket, a: Answers): number {
   if (a.style === "counterpuncher" && r.weightGrams <= 315) s += 1;
 
   if (a.armInjury === "past" && r.stiffnessRA !== null && r.stiffnessRA <= 67) s += 2;
+
+  // Detailed-mode questions.
+  if (a.swingSpeed === "compact" && r.weightGrams <= 295 && r.headSizeIn2 >= 102) s += 2;
+  if (a.swingSpeed === "fast" && r.weightGrams >= 300) s += 1;
+  if (a.swingSpeed === "very-fast" && r.weightGrams >= 305 && r.headSizeIn2 <= 100) s += 2;
+  if (a.spinStyle === "heavy-topspin" && open) s += 2;
+  if (a.spinStyle === "flat" && dense) s += 1;
 
   return s;
 }

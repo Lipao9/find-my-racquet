@@ -3,7 +3,7 @@
     "title": "Find the perfect tennis racquet for your game",
     "subtitle": "Answer a quick quiz about your level, style and preferences, and get 3 racquets picked just for you.",
     "cta": "Start the quiz",
-    "duration": "Takes less than 3 minutes"
+    "duration": "3-minute quick quiz or 7-minute detailed one"
   },
   "results": {
     "analyzing": "Analyzing your profile…",
@@ -22,6 +22,22 @@
     "noCandidatesHint": "We couldn't find racquets matching all your answers — try adjusting your budget or preferences."
   },
   "quiz": {
+    "modes": {
+      "title": "How do you want to answer?",
+      "subtitle": "Both get you 3 racquets — the detailed one understands your game more deeply.",
+      "quick": {
+        "title": "Quick quiz",
+        "duration": "~3 min",
+        "description": "12 multiple-choice questions.",
+        "detail": "Great for a first recommendation: level, style, preferences and budget."
+      },
+      "detailed": {
+        "title": "Detailed quiz",
+        "duration": "~7 min",
+        "description": "18 questions, several free-text.",
+        "detail": "Tell us about your swing, your spin, your strengths and what you want to improve — the more context, the sharper the recommendation."
+      }
+    },
     "progress": "Question {current} of {total}",
     "back": "Back",
     "next": "Next",
@@ -130,6 +146,48 @@
           "grass": "Grass",
           "mixed": "A mix of surfaces"
         }
+      },
+      "swingSpeed": {
+        "title": "How fast is your swing?",
+        "description": "Faster swings reward control-oriented racquets; compact swings need help from the frame.",
+        "options": {
+          "compact": "Compact — short strokes, I need power from the racquet",
+          "moderate": "Moderate — average, balanced swing",
+          "fast": "Fast — I generate good pace myself",
+          "very_fast": "Very fast — long, aggressive swing"
+        }
+      },
+      "spinStyle": {
+        "title": "How do you use spin in your game?",
+        "options": {
+          "heavy_topspin": "Heavy topspin — high, loaded balls",
+          "moderate_spin": "Moderate spin — I mix it up",
+          "flat": "Flat hitter — low, direct shots",
+          "slice": "Lots of slice — variety and low balls"
+        }
+      },
+      "racquetFeel": {
+        "title": "What do you like and dislike about your current racquet?",
+        "description": "Feel at impact, maneuverability, vibration, power... in your own words.",
+        "placeholder": "E.g. I love the control but lack power on serve, and it vibrates a lot on off-center hits"
+      },
+      "strengths": {
+        "title": "What are the strengths of your game?",
+        "description": "Shots, tactics or situations where you play your best.",
+        "placeholder": "E.g. aggressive crosscourt forehand, consistent serve, good point construction in long rallies"
+      },
+      "improveGoals": {
+        "title": "What do you most want to improve or feel is missing?",
+        "placeholder": "E.g. I want more depth on my backhand and feel rushed returning fast serves"
+      },
+      "physicalProfile": {
+        "title": "What's your physical profile and conditioning?",
+        "description": "Height, strength, endurance, age — whatever feels relevant.",
+        "placeholder": "E.g. 5'10\", 34 years old, good conditioning, but my shoulder aches after long matches"
+      },
+      "anythingElse": {
+        "title": "Anything else we should know?",
+        "placeholder": "E.g. I play local league tournaments and string with multifilament at 53 lbs"
       }
     }
   }

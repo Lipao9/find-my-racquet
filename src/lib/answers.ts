@@ -1,41 +1,40 @@
 import { z } from "zod";
-import { QUESTIONS, type QuestionId } from "./questions";
+import {
+  questionsFor,
+  QUIZ_MODES,
+  type Question,
+  type QuestionId,
+  type QuizMode,
+} from "./questions";
 
-function schemaFor(id: QuestionId) {
-  const q = QUESTIONS.find((q) => q.id === id)!;
-  if (q.kind === "text") {
-    const s = z.string().trim().max(120);
-    return q.optional ? s.optional() : s;
+export type Answers = Partial<Record<QuestionId, string>>;
+
+function schemaFor(q: Question) {
+  let s: z.ZodType<string>;
+  if (q.kind === "choice") {
+    s = z.enum(q.options as [string, ...string[]]);
+  } else {
+    const max = q.kind === "longtext" ? 500 : 120;
+    s = z.string().trim().max(max);
   }
-  const s = z.enum(q.options as [string, ...string[]]);
-  return q.optional ? s.optional() : s;
+  return q.optional ? s.optional() : s.and(z.string().min(1));
 }
 
-export const answersSchema = z.object(
-  Object.fromEntries(QUESTIONS.map((q) => [q.id, schemaFor(q.id)])),
-) as unknown as z.ZodType<Answers>;
+export function answersSchemaFor(mode: QuizMode): z.ZodType<Answers> {
+  return z.object(
+    Object.fromEntries(questionsFor(mode).map((q) => [q.id, schemaFor(q)])),
+  ) as unknown as z.ZodType<Answers>;
+}
 
-export type Answers = {
-  [K in QuestionId]?: string;
-} & {
-  skill: string;
-  frequency: string;
-  style: string;
-  powerControl: string;
-  armInjury: string;
-  budget: string;
-  weightPref: string;
-  headSizePref: string;
-  stringPattern: string;
-  courtType: string;
-};
+export const quizModeSchema = z.enum(QUIZ_MODES as [QuizMode, ...QuizMode[]]);
 
-export function encodeAnswers(answers: Answers): string {
+export function encodeAnswers(answers: Answers, mode: QuizMode): string {
   const params = new URLSearchParams();
-  for (const q of QUESTIONS) {
+  params.set("mode", mode);
+  for (const q of questionsFor(mode)) {
     const value = answers[q.id];
-    if (value !== undefined && value !== "") {
-      params.set(q.id, value);
+    if (value !== undefined && value.trim() !== "") {
+      params.set(q.id, value.trim());
     }
   }
   return params.toString();
@@ -43,14 +42,18 @@ export function encodeAnswers(answers: Answers): string {
 
 export function decodeAnswers(
   searchParams: Record<string, string | string[] | undefined>,
-): Answers | null {
+): { answers: Answers; mode: QuizMode } | null {
+  const modeParsed = quizModeSchema.safeParse(searchParams.mode ?? "quick");
+  if (!modeParsed.success) return null;
+  const mode = modeParsed.data;
+
   const raw: Record<string, string> = {};
-  for (const q of QUESTIONS) {
+  for (const q of questionsFor(mode)) {
     const value = searchParams[q.id];
     if (typeof value === "string" && value !== "") {
       raw[q.id] = value;
     }
   }
-  const parsed = answersSchema.safeParse(raw);
-  return parsed.success ? parsed.data : null;
+  const parsed = answersSchemaFor(mode).safeParse(raw);
+  return parsed.success ? { answers: parsed.data, mode } : null;
 }

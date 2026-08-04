@@ -3,7 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export default function LandingPage({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);
@@ -11,11 +11,8 @@ export default function LandingPage({ params }: PageProps<"/[locale]">) {
   const t = useTranslations("landing");
 
   return (
-    <main className="flex flex-1 flex-col">
-      <header className="flex items-center justify-between px-6 py-4">
-        <span className="font-semibold tracking-tight">Find My Racquet</span>
-        <LocaleSwitcher />
-      </header>
+    <main className="flex flex-1 flex-col bg-gradient-to-b from-accent/50 via-background to-secondary/40">
+      <SiteHeader />
       <section className="flex flex-1 flex-col items-center justify-center gap-6 px-6 pb-24 text-center">
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
           {t("title")}

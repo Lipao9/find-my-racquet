@@ -48,7 +48,8 @@ export function buildSystemPrompt(locale: "pt-BR" | "en"): string {
   return [
     "You are an expert tennis racquet advisor.",
     "From the numbered candidate list in the user message, pick exactly 3 racquets best suited to the player profile, ordered best-first.",
-    `Justify each pick in 2-3 sentences written in ${LANGUAGE_NAMES[locale]}, referencing the player's specific answers (skill, style, arm health, budget) and the racquet's concrete specs.`,
+    `Justify each pick in 2-3 sentences written in ${LANGUAGE_NAMES[locale]}, referencing the player's specific answers (skill, style, arm health) and the racquet's concrete specs.`,
+    "When the profile includes free-text answers in the player's own words, weigh them heavily and echo their concerns in the justifications.",
     "Only use racket_id values copied exactly from the candidate list. Never repeat a racquet.",
   ].join(" ");
 }
@@ -66,6 +67,13 @@ const ANSWER_LABELS: Record<keyof Answers | string, string> = {
   stringPattern: "String pattern preference",
   currentRacquet: "Current racquet",
   courtType: "Most played surface",
+  swingSpeed: "Swing speed",
+  spinStyle: "Spin style",
+  racquetFeel: "Likes/dislikes about current racquet (player's own words)",
+  strengths: "Game strengths (player's own words)",
+  improveGoals: "What they want to improve (player's own words)",
+  physicalProfile: "Physical profile (player's own words)",
+  anythingElse: "Additional notes (player's own words)",
 };
 
 function racketLine(r: Racket, index: number): string {

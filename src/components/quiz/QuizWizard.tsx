@@ -1,28 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { QuestionCard } from "@/components/quiz/QuestionCard";
 import { encodeAnswers, type Answers } from "@/lib/answers";
-import { QUESTIONS } from "@/lib/questions";
+import { questionsFor, type QuizMode } from "@/lib/questions";
 
-export function QuizWizard() {
+export function QuizWizard({ mode }: { mode: QuizMode }) {
   const t = useTranslations("quiz");
   const router = useRouter();
+  const questions = useMemo(() => questionsFor(mode), [mode]);
   const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<Partial<Answers>>({});
+  const [answers, setAnswers] = useState<Answers>({});
 
-  const question = QUESTIONS[step];
+  const question = questions[step];
   const value = answers[question.id];
-  const isLast = step === QUESTIONS.length - 1;
-  const canAdvance = question.optional || (value !== undefined && value !== "");
+  const isLast = step === questions.length - 1;
+  const canAdvance =
+    question.optional || (value !== undefined && value.trim() !== "");
 
   function next() {
     if (isLast) {
-      router.push(`/results?${encodeAnswers(answers as Answers)}`);
+      router.push(`/results?${encodeAnswers(answers, mode)}`);
     } else {
       setStep(step + 1);
     }
@@ -32,9 +34,12 @@ export function QuizWizard() {
     <div className="mx-auto flex w-full max-w-xl flex-1 flex-col gap-8 px-6 py-10">
       <div className="flex flex-col gap-2">
         <div className="flex justify-between text-sm text-muted-foreground">
-          <span>{t("progress", { current: step + 1, total: QUESTIONS.length })}</span>
+          <span>
+            {t("progress", { current: step + 1, total: questions.length })}
+          </span>
+          <span>{t(`modes.${mode}.title`)}</span>
         </div>
-        <Progress value={((step + 1) / QUESTIONS.length) * 100} />
+        <Progress value={((step + 1) / questions.length) * 100} />
       </div>
 
       <QuestionCard

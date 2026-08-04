@@ -40,6 +40,15 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
           maxLength={120}
           className="h-11 rounded-md border border-input bg-transparent px-3 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         />
+      ) : question.kind === "longtext" ? (
+        <textarea
+          value={value ?? ""}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={t(`questions.${question.id}.placeholder`)}
+          maxLength={500}
+          rows={5}
+          className="resize-none rounded-md border border-input bg-transparent px-3 py-2 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        />
       ) : (
         <RadioGroup
           key={question.id}
