@@ -45,16 +45,22 @@ Tabelas: `quiz_runs` (perfil, status, modelo, tokens, latência), `recommendatio
 (as 3 escolhas), `outbound_clicks` (raquete, loja, origem) e `rate_limits`.
 A coluna `merchant` existe desde o início para uma segunda loja não exigir migração.
 
+`db:migrate` e `db:studio` leem o `DATABASE_URL` do `.env.local` (que é
+gitignored), então a senha do banco não precisa passar pela linha de comando:
+
 ```bash
 # Postgres local descartável
 docker run -d --name fmr-pg -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=findmyracquet \
   -p 55432:5432 postgres:16-alpine
-export DATABASE_URL="postgresql://postgres:dev@localhost:55432/findmyracquet"
+echo 'DATABASE_URL=postgresql://postgres:dev@localhost:55432/findmyracquet' >> .env.local
 
 npm run db:migrate    # aplica drizzle/*.sql
 npm run db:generate   # gera migração nova depois de mexer no schema
 npm run db:studio     # UI para inspecionar os dados
 ```
+
+Para migrar o banco de produção, troque o valor no `.env.local` pela connection
+string **direct** da Neon (a pooled é só para a aplicação em runtime).
 
 Na Vercel, use a connection string **pooled** da Neon (host com `-pooler`): cada
 invocação serverless abre sua própria conexão e o endpoint direto esgota rápido.
