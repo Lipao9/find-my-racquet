@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getRacketBySlug, loadCatalog } from "@/lib/catalog";
+import { MARK_PATHS, MARK_VIEWBOX } from "@/components/BrandLogo";
 
 export const alt = "RaqMatch — racquet specs";
 export const size = { width: 1200, height: 630 };
@@ -25,15 +26,18 @@ const BORDER = "#e3dcd2";
 
 // The brand mark, as a data URI. Satori renders `<img>` reliably but supports only
 // a subset of inline SVG, so the mark travels as an image rather than as elements.
-// Geometry is kept in sync with src/components/BrandLogo.tsx by hand.
+// Geometry is imported rather than transcribed — see the note on MARK_PATHS.
 const MARK = `data:image/svg+xml;base64,${Buffer.from(
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">` +
-    `<g stroke="${TERRACOTTA}" stroke-width="1.6" opacity="0.8">` +
-    `<path d="M10 8.12V23.88"/><path d="M13.5 5.48V26.52"/>` +
-    `<path d="M18.5 5.48V26.52"/><path d="M22 8.12V23.88"/>` +
-    `<path d="M8.79 10H23.21"/><path d="M7.4 16H24.6"/><path d="M8.79 22H23.21"/></g>` +
-    `<ellipse cx="16" cy="16" rx="8.6" ry="11" stroke="${TERRACOTTA}" stroke-width="3"/></svg>`,
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${MARK_VIEWBOX}" fill="${TERRACOTTA}">` +
+    MARK_PATHS.map((d) => `<path d="${d}"/>`).join("") +
+    `</svg>`,
 ).toString("base64")}`;
+
+// The mark's bounding box is 532×701, so it is drawn to a matching 24×32 slot.
+// Satori stretches an <img> to whatever box it is given rather than preserving
+// the aspect ratio, so a square one would squash it.
+const MARK_WIDTH = 24;
+const MARK_HEIGHT = 32;
 
 export default async function Image({
   params,
@@ -90,7 +94,7 @@ export default async function Image({
 
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           {/* Satori renders into a PNG, so next/image would be meaningless here. */}
-          <img src={MARK} width={32} height={32} alt="" />
+          <img src={MARK} width={MARK_WIDTH} height={MARK_HEIGHT} alt="" />
           <span
             style={{
               fontSize: 24,
