@@ -26,11 +26,69 @@ export const catalogSchema = z.object({
   rackets: z.array(racketSchema).min(1),
 });
 
-let cached: Racket[] | null = null;
+export type Catalog = z.infer<typeof catalogSchema>;
+
+let cached: Catalog | null = null;
+
+function parsed(): Catalog {
+  cached ??= catalogSchema.parse(catalogFile);
+  return cached;
+}
 
 export function loadCatalog(): Racket[] {
-  if (!cached) {
-    cached = catalogSchema.parse(catalogFile).rackets;
+  return parsed().rackets;
+}
+
+/** When the catalog was last scraped — drives `lastModified` in the sitemap. */
+export function catalogUpdatedAt(): Date {
+  return new Date(parsed().updatedAt);
+}
+
+/**
+ * Racket ids are already slug-shaped (`babolat-pure-aero-2026`), so they double
+ * as the URL segment — no separate slug field to keep in sync.
+ */
+export function getRacketBySlug(slug: string): Racket | undefined {
+  return loadCatalog().find((r) => r.id === slug);
+}
+
+/** Brands with their racquets, alphabetical, for the browsable index. */
+export function racketsByBrand(): { brand: string; rackets: Racket[] }[] {
+  const groups = new Map<string, Racket[]>();
+  for (const racket of loadCatalog()) {
+    const list = groups.get(racket.brand);
+    if (list) list.push(racket);
+    else groups.set(racket.brand, [racket]);
   }
-  return cached;
+  return [...groups.entries()]
+    .map(([brand, rackets]) => ({
+      brand,
+      rackets: [...rackets].sort((a, b) => a.model.localeCompare(b.model)),
+    }))
+    .sort((a, b) => a.brand.localeCompare(b.brand));
+}
+
+/**
+ * Racquets a shopper on this page would plausibly cross-shop: closest on the
+ * specs that actually change how a frame plays. Same-brand frames are nudged
+ * down so the block reads as a comparison rather than a brand catalogue, which
+ * is also what makes the internal links worth crawling.
+ */
+export function findRelated(racket: Racket, limit = 4): Racket[] {
+  return loadCatalog()
+    .filter((r) => r.id !== racket.id)
+    .map((r) => {
+      let distance =
+        Math.abs(r.headSizeIn2 - racket.headSizeIn2) * 2 +
+        Math.abs(r.weightGrams - racket.weightGrams) * 0.4;
+      if (r.stiffnessRA !== null && racket.stiffnessRA !== null) {
+        distance += Math.abs(r.stiffnessRA - racket.stiffnessRA);
+      }
+      if (r.stringPattern !== racket.stringPattern) distance += 4;
+      if (r.brand === racket.brand) distance += 6;
+      return { racket: r, distance };
+    })
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, limit)
+    .map((x) => x.racket);
 }
