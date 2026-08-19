@@ -14,6 +14,9 @@ import { ShareButton } from "./ShareButton";
 interface Recommendation {
   racket: Racket;
   justification: string;
+  /** Built server-side in /api/recommend so affiliate config stays off the client. */
+  buyUrl: string;
+  rel: string;
 }
 
 type State =
@@ -117,6 +120,8 @@ export function ResultsView({
                 <RacketCard
                   racket={rec.racket}
                   justification={rec.justification}
+                  buyUrl={rec.buyUrl}
+                  rel={rec.rel}
                   rank={i + 1}
                 />
               </div>

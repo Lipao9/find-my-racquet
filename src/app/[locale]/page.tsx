@@ -1,12 +1,24 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { alternatesFor } from "@/lib/urls";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CourtLines } from "@/components/CourtLines";
+
+// Title and description come from the locale layout; this only pins the
+// canonical and hreflang set for the locale root.
+export async function generateMetadata({
+  params,
+}: PageProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: alternatesFor("/", locale as Locale) };
+}
 
 export default function LandingPage({ params }: PageProps<"/[locale]">) {
   const { locale } = use(params);

@@ -11,15 +11,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Link } from "@/i18n/navigation";
 import type { Racket } from "@/lib/catalog";
 
 interface RacketCardProps {
   racket: Racket;
   justification: string;
+  buyUrl: string;
+  rel: string;
   rank: number;
 }
 
-export function RacketCard({ racket, justification, rank }: RacketCardProps) {
+export function RacketCard({
+  racket,
+  justification,
+  buyUrl,
+  rel,
+  rank,
+}: RacketCardProps) {
   const t = useTranslations("results");
   const isBestMatch = rank === 1;
 
@@ -84,24 +93,28 @@ export function RacketCard({ racket, justification, rank }: RacketCardProps) {
           </p>
         </div>
       </CardContent>
-      <CardFooter className="flex items-center justify-between border-t border-border/60 pt-4">
+      <CardFooter className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 pt-4">
         <span className="font-heading text-lg font-semibold">
           US$ {racket.priceUSD}
         </span>
-        <Button
-          variant="outline"
-          size="sm"
-          nativeButton={false}
-          render={
-            <a
-              href={racket.productUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            />
-          }
-        >
-          {t("viewProduct")}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            nativeButton={false}
+            render={<Link href={`/racquets/${racket.id}`} />}
+          >
+            {t("viewSpecs")}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<a href={buyUrl} target="_blank" rel={rel} />}
+          >
+            {t("viewProduct")}
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

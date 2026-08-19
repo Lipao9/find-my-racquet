@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { buyUrl, outboundRel } from "@/lib/affiliate";
 import { answersSchemaFor, quizModeSchema, type Answers } from "@/lib/answers";
 import { loadCatalog } from "@/lib/catalog";
 import { InsufficientCandidatesError, prefilter } from "@/lib/prefilter";
@@ -40,11 +41,19 @@ export async function POST(req: Request) {
   try {
     const picks = await recommend(candidates, body.answers, body.locale);
     const byId = new Map(candidates.map((r) => [r.id, r]));
+    // The outbound link is built here rather than in the card so the affiliate
+    // configuration stays server-only and never reaches the client bundle.
+    const rel = outboundRel();
     return NextResponse.json({
-      recommendations: picks.map((p) => ({
-        racket: byId.get(p.racketId)!,
-        justification: p.justification,
-      })),
+      recommendations: picks.map((p) => {
+        const racket = byId.get(p.racketId)!;
+        return {
+          racket,
+          justification: p.justification,
+          buyUrl: buyUrl(racket),
+          rel,
+        };
+      }),
     });
   } catch (error) {
     console.error("recommendation failed:", error);

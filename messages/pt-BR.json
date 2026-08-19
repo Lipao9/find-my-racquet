@@ -1,5 +1,7 @@
 {
   "landing": {
+    "metaTitle": "Find My Racquet — a raquete de tênis ideal para o seu jogo",
+    "metaDescription": "Responda um quiz sobre seu nível, estilo e preferências e receba 3 raquetes de tênis escolhidas sob medida, com o porquê de cada uma.",
     "kicker": "Recomendação com inteligência artificial",
     "title": "A raquete <em>perfeita</em> para o seu jogo",
     "subtitle": "Responda um quiz sobre seu nível, estilo e preferências, e receba 3 raquetes escolhidas sob medida — com o porquê de cada uma.",
@@ -19,6 +21,7 @@
     "subtitle": "Escolhidas com base nas suas respostas.",
     "bestMatch": "Melhor escolha",
     "viewProduct": "Ver na Tennis Warehouse",
+    "viewSpecs": "Especificações",
     "share": "Compartilhar resultado",
     "linkCopied": "Link copiado!",
     "retake": "Refazer o quiz",
@@ -189,6 +192,53 @@
         "title": "Algo mais que a gente deveria saber?",
         "placeholder": "Ex.: jogo torneios da liga local, tenho duas raquetes e cordo com multifilamento a 24kg"
       }
+    }
+  },
+  "nav": {
+    "racquets": "Raquetes"
+  },
+  "footer": {
+    "disclosure": "Alguns links para lojas são de afiliado: se você comprar por eles, podemos receber uma comissão — sem custo extra para você."
+  },
+  "racquets": {
+    "metaTitle": "Todas as raquetes de tênis — especificações e comparação",
+    "metaDescription": "Especificações completas de {count} raquetes de tênis de {brands} marcas: peso, tamanho de cabeça, rigidez, padrão de cordas e swingweight.",
+    "title": "Catálogo de raquetes",
+    "subtitle": "Especificações de {count} raquetes de {brands} marcas — as mesmas que o quiz usa para recomendar.",
+    "models": "{count} modelos",
+    "quizCta": "Não sabe qual escolher? Faça o quiz"
+  },
+  "racquet": {
+    "metaDescription": "{name}: {headSize} in², {weight}g encordoada, padrão {pattern}. Especificações completas, raquetes parecidas e para quem esse frame faz sentido.",
+    "specsTitle": "Especificações",
+    "specs": {
+      "brand": "Marca",
+      "headSize": "Tamanho da cabeça",
+      "weight": "Peso (encordoada)",
+      "balance": "Balanço",
+      "stiffness": "Rigidez (RA)",
+      "stringPattern": "Padrão de cordas",
+      "swingweight": "Swingweight",
+      "price": "Preço de referência"
+    },
+    "unknown": "não informado",
+    "buy": "Ver na Tennis Warehouse",
+    "priceNote": "Preço de referência na Tennis Warehouse, em dólar. Pode variar.",
+    "profileTitle": "Para quem faz sentido",
+    "relatedTitle": "Raquetes parecidas",
+    "relatedHint": "Frames com especificações próximas, para comparar.",
+    "quizTitle": "Essa é a raquete certa para você?",
+    "quizBody": "O quiz cruza suas respostas com todo o catálogo e explica o porquê de cada escolha.",
+    "quizCta": "Fazer o quiz",
+    "traits": {
+      "armFriendly": "Rigidez baixa (RA {ra}), mais confortável para quem tem histórico de dor no braço.",
+      "stiff": "Frame rígido (RA {ra}): devolve mais energia, mas transmite mais impacto ao braço.",
+      "power": "Cabeça de {headSize} in² com padrão aberto: mais potência e tolerância a erros.",
+      "control": "Cabeça de {headSize} in² com padrão fechado: precisão e controle na colocação.",
+      "light": "{weight}g: fácil de manobrar, indicada para swings mais compactos.",
+      "heavy": "{weight}g: estabilidade no impacto, pede swing firme e bom condicionamento.",
+      "spin": "Padrão {pattern}: cordas mais espaçadas ajudam a gerar topspin.",
+      "maneuverable": "Swingweight {sw}: giro rápido, bom para trocas curtas e voleios."
     }
   }
 }

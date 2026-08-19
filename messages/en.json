@@ -1,5 +1,7 @@
 {
   "landing": {
+    "metaTitle": "Find My Racquet — the right tennis racquet for your game",
+    "metaDescription": "Answer a quiz about your level, style and preferences and get 3 tennis racquets picked just for you, with the why behind each one.",
     "kicker": "AI-powered recommendations",
     "title": "The <em>perfect</em> racquet for your game",
     "subtitle": "Answer a quiz about your level, style and preferences, and get 3 racquets picked just for you — with the why behind each one.",
@@ -19,6 +21,7 @@
     "subtitle": "Picked based on your answers.",
     "bestMatch": "Best match",
     "viewProduct": "View at Tennis Warehouse",
+    "viewSpecs": "Specs",
     "share": "Share result",
     "linkCopied": "Link copied!",
     "retake": "Retake the quiz",
@@ -189,6 +192,53 @@
         "title": "Anything else we should know?",
         "placeholder": "E.g. I play local league tournaments and string with multifilament at 53 lbs"
       }
+    }
+  },
+  "nav": {
+    "racquets": "Racquets"
+  },
+  "footer": {
+    "disclosure": "Some store links are affiliate links: if you buy through them we may earn a commission — at no extra cost to you."
+  },
+  "racquets": {
+    "metaTitle": "Every tennis racquet — specs and comparison",
+    "metaDescription": "Full specs for {count} tennis racquets across {brands} brands: weight, head size, stiffness, string pattern and swingweight.",
+    "title": "Racquet catalog",
+    "subtitle": "Specs for {count} racquets across {brands} brands — the same ones the quiz recommends from.",
+    "models": "{count} models",
+    "quizCta": "Not sure which one? Take the quiz"
+  },
+  "racquet": {
+    "metaDescription": "{name}: {headSize} in², {weight}g strung, {pattern} pattern. Full specs, similar racquets and who this frame suits.",
+    "specsTitle": "Specs",
+    "specs": {
+      "brand": "Brand",
+      "headSize": "Head size",
+      "weight": "Weight (strung)",
+      "balance": "Balance",
+      "stiffness": "Stiffness (RA)",
+      "stringPattern": "String pattern",
+      "swingweight": "Swingweight",
+      "price": "Reference price"
+    },
+    "unknown": "not listed",
+    "buy": "View at Tennis Warehouse",
+    "priceNote": "Reference price at Tennis Warehouse, in USD. Subject to change.",
+    "profileTitle": "Who it suits",
+    "relatedTitle": "Similar racquets",
+    "relatedHint": "Frames with close specs, for comparison.",
+    "quizTitle": "Is this the right racquet for you?",
+    "quizBody": "The quiz matches your answers against the whole catalog and explains the why behind each pick.",
+    "quizCta": "Take the quiz",
+    "traits": {
+      "armFriendly": "Low stiffness (RA {ra}), more comfortable if you have a history of arm pain.",
+      "stiff": "Stiff frame (RA {ra}): returns more energy, but sends more shock to the arm.",
+      "power": "{headSize} in² head with an open pattern: more power and more forgiveness.",
+      "control": "{headSize} in² head with a dense pattern: precision and placement control.",
+      "light": "{weight}g: easy to maneuver, suits more compact swings.",
+      "heavy": "{weight}g: stable through contact, wants a firm swing and good conditioning.",
+      "spin": "{pattern} pattern: wider string spacing helps generate topspin.",
+      "maneuverable": "Swingweight {sw}: quick through the air, good for short exchanges and volleys."
     }
   }
 }

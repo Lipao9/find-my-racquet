@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Fraunces, Geist, Geist_Mono } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/site";
 import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
 
@@ -23,10 +24,32 @@ const fraunces = Fraunces({
   axes: ["opsz", "SOFT", "WONK"],
 });
 
-export const metadata: Metadata = {
-  title: "Find My Racquet",
-  description: "Answer a short quiz and get 3 tennis racquets picked for you.",
-};
+// Defaults every page inherits. `alternates` deliberately stays out of here:
+// a canonical set on the layout would be inherited by /quiz and /results, which
+// would then all declare themselves as the locale root. Pages that want a
+// canonical set their own.
+export async function generateMetadata({
+  params,
+}: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+
+  const t = await getTranslations({ locale, namespace: "landing" });
+
+  return {
+    metadataBase: new URL(siteUrl()),
+    title: {
+      default: t("metaTitle"),
+      template: "%s · Find My Racquet",
+    },
+    description: t("metaDescription"),
+    openGraph: {
+      siteName: "Find My Racquet",
+      type: "website",
+      locale,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
