@@ -66,7 +66,18 @@ export function AdSlot({
 
   return (
     <aside
-      className={cn("mx-auto w-full max-w-3xl", className)}
+      className={cn(
+        "mx-auto w-full max-w-3xl",
+        // AdSense stamps data-ad-status="unfilled" on the <ins> when it has no ad
+        // for the slot — which is every request while the account is under review,
+        // and some requests forever after. Collapse the whole block in that case:
+        // the reserved height below is right while an ad is *loading*, but left
+        // alone on an unfilled slot it leaves a labelled empty gap mid-page.
+        // Only the attribute's presence triggers this, so the reservation still
+        // does its job for the entire loading window.
+        "[&:has(ins[data-ad-status='unfilled'])]:hidden",
+        className,
+      )}
       // Reserved before the creative arrives, so filling the slot never pushes
       // content down. See AD_MIN_HEIGHT.
       style={{ minHeight: AD_MIN_HEIGHT[format] }}
