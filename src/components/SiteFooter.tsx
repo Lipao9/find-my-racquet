@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { isAffiliateEnabled } from "@/lib/affiliate";
 
 export async function SiteFooter() {
@@ -14,7 +15,21 @@ export async function SiteFooter() {
           {t("disclosure")}
         </p>
       )}
-      Find My Racquet · {new Date().getFullYear()}
+      <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+        <span>RaqMatch · {new Date().getFullYear()}</span>
+        <span aria-hidden className="text-border">
+          ·
+        </span>
+        {/* Unconditional, not gated on ads being enabled: AdSense review needs to
+            reach this from every page, and LGPD disclosure is owed regardless of
+            whether ads happen to be switched on. */}
+        <Link
+          href="/privacy"
+          className="transition-colors hover:text-primary hover:underline"
+        >
+          {t("privacy")}
+        </Link>
+      </div>
     </footer>
   );
 }

@@ -1,6 +1,6 @@
 {
   "landing": {
-    "metaTitle": "Find My Racquet — a raquete de tênis ideal para o seu jogo",
+    "metaTitle": "RaqMatch — a raquete de tênis ideal para o seu jogo",
     "metaDescription": "Responda um quiz sobre seu nível, estilo e preferências e receba 3 raquetes de tênis escolhidas sob medida, com o porquê de cada uma.",
     "kicker": "Recomendação com inteligência artificial",
     "title": "A raquete <em>perfeita</em> para o seu jogo",
@@ -198,7 +198,60 @@
     "racquets": "Raquetes"
   },
   "footer": {
-    "disclosure": "Alguns links para lojas são de afiliado: se você comprar por eles, podemos receber uma comissão — sem custo extra para você."
+    "disclosure": "Alguns links para lojas são de afiliado: se você comprar por eles, podemos receber uma comissão — sem custo extra para você.",
+    "privacy": "Privacidade"
+  },
+  "ads": {
+    "label": "Publicidade"
+  },
+  "consent": {
+    "label": "Preferências de anúncios",
+    "body": "Usamos cookies do Google para exibir anúncios que sustentam o site. Se você recusar, continuamos mostrando anúncios — só não personalizados.",
+    "policyLink": "Ler a política de privacidade",
+    "accept": "Aceitar personalizados",
+    "deny": "Só genéricos"
+  },
+  "privacy": {
+    "metaTitle": "Política de Privacidade",
+    "metaDescription": "Como o RaqMatch coleta, usa e protege seus dados: respostas do quiz, cookies de anúncios, links de afiliado e seus direitos sob a LGPD.",
+    "title": "Política de Privacidade",
+    "updated": "Atualizada em {date}",
+    "updatedDate": "19 de agosto de 2026",
+    "intro": "O RaqMatch é um recomendador de raquetes de tênis. Esta página explica, sem rodeios, quais dados o site coleta, por quê, com quem eles são compartilhados e como você pode exercer seus direitos.",
+    "sections": {
+      "controller": {
+        "title": "Quem é o responsável",
+        "body": "O RaqMatch (raqmatch.com) é um projeto independente, operado por pessoa física. Não vendemos raquetes nem processamos pagamentos: o site recomenda modelos e encaminha você para lojas parceiras."
+      },
+      "data": {
+        "title": "Quais dados coletamos",
+        "body": "Respostas do quiz: seu nível, estilo de jogo, preferências e os textos livres que você escrever. Elas são gravadas junto da recomendação gerada, para que possamos medir e melhorar a qualidade das indicações.\n\nCliques em lojas: registramos qual raquete foi clicada, de qual página e em qual idioma.\n\nDados técnicos: seu endereço IP é usado para limitar a quantidade de recomendações por visitante, evitando abuso do serviço. Não criamos conta, não pedimos nome, e-mail ou telefone, e não coletamos dados de pagamento.\n\nNão pedimos nem usamos informações sensíveis. Se você mencionar uma lesão nos campos de texto livre, esse dado é usado apenas para calibrar a rigidez da raquete recomendada."
+      },
+      "cookies": {
+        "title": "Cookies e anúncios",
+        "body": "O site exibe anúncios do Google AdSense. O Google e seus parceiros usam cookies para exibir anúncios e medir desempenho.\n\nVocê escolhe: ao aceitar, os anúncios podem ser personalizados com base no seu histórico de navegação. Ao recusar, seguimos exibindo anúncios, mas apenas contextuais — sem construir um perfil sobre você. Sua escolha fica guardada no seu próprio navegador e pode ser alterada a qualquer momento limpando os dados do site.\n\nVocê também pode gerenciar a personalização diretamente no Google, em google.com/settings/ads, ou desativar cookies de terceiros em qualquer site pelas configurações do seu navegador.\n\nNão usamos cookies próprios de rastreamento e não há trackers de redes sociais no site."
+      },
+      "ai": {
+        "title": "Uso de inteligência artificial",
+        "body": "Para gerar a recomendação, suas respostas são enviadas à API da Anthropic (Claude), que roda em servidores fora do Brasil. Enviamos apenas o conteúdo do quiz — nunca seu IP ou qualquer identificador seu. Segundo os termos comerciais da Anthropic, esses dados não são usados para treinar modelos.\n\nEvite escrever dados pessoais identificáveis nos campos de texto livre: eles não são necessários para a recomendação."
+      },
+      "affiliate": {
+        "title": "Links de afiliado",
+        "body": "Alguns links para lojas são de afiliado: se você comprar por eles, podemos receber uma comissão, sem custo extra para você. O clique passa antes por um endereço nosso, que registra a raquete clicada e então encaminha para a loja.\n\nA partir daí, você está no site da loja e sujeito à política de privacidade dela. A comissão não influencia quais raquetes o quiz recomenda — o modelo que gera as indicações não tem acesso a preço nem a informação de comissão."
+      },
+      "retention": {
+        "title": "Por quanto tempo guardamos",
+        "body": "Respostas de quiz e cliques ficam armazenados em banco de dados hospedado na Neon enquanto forem úteis para avaliar a qualidade das recomendações. Como não há conta de usuário, esses registros não estão vinculados à sua identidade."
+      },
+      "rights": {
+        "title": "Seus direitos (LGPD)",
+        "body": "Você pode solicitar confirmação da existência de tratamento, acesso, correção, anonimização, portabilidade ou eliminação dos seus dados, além de revogar o consentimento para anúncios personalizados.\n\nUm aviso honesto sobre o limite prático: como o site não tem login, não temos como ligar um registro de quiz a você com segurança. Se quiser exercer um direito sobre um registro específico, será preciso nos dar informação suficiente para localizá-lo."
+      },
+      "contact": {
+        "title": "Contato",
+        "body": "Dúvidas sobre privacidade ou pedidos relacionados aos seus dados:"
+      }
+    }
   },
   "racquets": {
     "metaTitle": "Todas as raquetes de tênis — especificações e comparação",

@@ -7,7 +7,15 @@ import { alternatesFor } from "@/lib/urls";
 // locales as hreflang alternates — the shape Google prefers over one entry per
 // locale. /results is deliberately absent: it is a parameterised, LLM-generated
 // page, marked noindex at the page level so shared links still get OG previews.
-const STATIC_PATHS = ["/", "/quiz", "/quiz/quick", "/quiz/detailed"] as const;
+const STATIC_PATHS = [
+  "/",
+  "/quiz",
+  "/quiz/quick",
+  "/quiz/detailed",
+  // Listed so AdSense review and crawlers can both reach the policy; a privacy
+  // page they cannot find does not satisfy either.
+  "/privacy",
+] as const;
 
 function entry(href: string, lastModified?: Date): MetadataRoute.Sitemap[number] {
   // Same helper the pages use, so the hreflang set here can never drift from

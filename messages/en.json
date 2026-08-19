@@ -1,6 +1,6 @@
 {
   "landing": {
-    "metaTitle": "Find My Racquet — the right tennis racquet for your game",
+    "metaTitle": "RaqMatch — the right tennis racquet for your game",
     "metaDescription": "Answer a quiz about your level, style and preferences and get 3 tennis racquets picked just for you, with the why behind each one.",
     "kicker": "AI-powered recommendations",
     "title": "The <em>perfect</em> racquet for your game",
@@ -198,7 +198,60 @@
     "racquets": "Racquets"
   },
   "footer": {
-    "disclosure": "Some store links are affiliate links: if you buy through them we may earn a commission — at no extra cost to you."
+    "disclosure": "Some store links are affiliate links: if you buy through them we may earn a commission — at no extra cost to you.",
+    "privacy": "Privacy"
+  },
+  "ads": {
+    "label": "Advertisement"
+  },
+  "consent": {
+    "label": "Ad preferences",
+    "body": "We use Google cookies to show the ads that keep this site running. If you decline we still show ads — just not personalised ones.",
+    "policyLink": "Read the privacy policy",
+    "accept": "Accept personalised",
+    "deny": "Generic only"
+  },
+  "privacy": {
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "How RaqMatch collects, uses and protects your data: quiz answers, ad cookies, affiliate links and your rights.",
+    "title": "Privacy Policy",
+    "updated": "Last updated {date}",
+    "updatedDate": "August 19, 2026",
+    "intro": "RaqMatch is a tennis racquet recommender. This page explains, plainly, what data the site collects, why, who it is shared with, and how you can exercise your rights.",
+    "sections": {
+      "controller": {
+        "title": "Who is responsible",
+        "body": "RaqMatch (raqmatch.com) is an independent project run by an individual. We do not sell racquets and we do not process payments: the site recommends models and hands you off to partner stores."
+      },
+      "data": {
+        "title": "What we collect",
+        "body": "Quiz answers: your level, playing style, preferences and any free-text you write. They are stored alongside the recommendation we generated, so we can measure and improve the quality of the picks.\n\nStore clicks: we record which racquet was clicked, from which page, and in which language.\n\nTechnical data: your IP address is used to rate-limit how many recommendations one visitor can request, which prevents abuse of the service. There are no accounts, we never ask for your name, email or phone number, and we collect no payment data.\n\nWe do not ask for or use sensitive information. If you mention an injury in a free-text field, that is used only to calibrate the stiffness of the racquets we recommend."
+      },
+      "cookies": {
+        "title": "Cookies and advertising",
+        "body": "This site shows Google AdSense ads. Google and its partners use cookies to serve ads and measure performance.\n\nYou choose: if you accept, ads may be personalised based on your browsing history. If you decline, we still show ads, but contextual ones only — no profile is built about you. Your choice is stored in your own browser and can be changed at any time by clearing this site's data.\n\nYou can also manage personalisation directly with Google at google.com/settings/ads, or block third-party cookies site-wide in your browser settings.\n\nWe set no first-party tracking cookies and there are no social-network trackers on the site."
+      },
+      "ai": {
+        "title": "Use of artificial intelligence",
+        "body": "To generate a recommendation, your answers are sent to Anthropic's API (Claude), which runs on servers outside Brazil. We send only the quiz content — never your IP or any identifier of yours. Under Anthropic's commercial terms, this data is not used to train models.\n\nPlease avoid writing personally identifying details in the free-text fields: they are not needed for the recommendation."
+      },
+      "affiliate": {
+        "title": "Affiliate links",
+        "body": "Some store links are affiliate links: if you buy through them we may earn a commission, at no extra cost to you. The click first passes through an address of ours, which records the racquet clicked and then forwards you to the store.\n\nFrom that point you are on the store's site and subject to its privacy policy. Commission does not influence which racquets the quiz recommends — the model that generates the picks has no access to price or commission information."
+      },
+      "retention": {
+        "title": "How long we keep it",
+        "body": "Quiz answers and clicks are stored in a database hosted on Neon for as long as they remain useful for evaluating recommendation quality. Since there are no user accounts, these records are not linked to your identity."
+      },
+      "rights": {
+        "title": "Your rights",
+        "body": "You may request confirmation that processing exists, access, correction, anonymisation, portability or deletion of your data, and you may withdraw consent for personalised ads at any time.\n\nAn honest note on the practical limit: because the site has no login, we cannot reliably tie a quiz record to you. To exercise a right over a specific record, you will need to give us enough information to locate it."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "Questions about privacy, or requests concerning your data:"
+      }
+    }
   },
   "racquets": {
     "metaTitle": "Every tennis racquet — specs and comparison",
