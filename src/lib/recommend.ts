@@ -21,6 +21,16 @@ export interface Pick {
   justification: string;
 }
 
+export interface RecommendResult {
+  picks: Pick[];
+  model: string;
+  /** Summed across the corrective retry, so cost per quiz is the real cost. */
+  inputTokens: number;
+  outputTokens: number;
+  /** Time spent in the model call(s) only, not the whole request. */
+  latencyMs: number;
+}
+
 const toolOutputSchema = z.object({
   recommendations: z
     .array(
@@ -39,10 +49,16 @@ function getClient(): Anthropic {
   return client;
 }
 
+interface ModelCall {
+  picks: Pick[];
+  inputTokens: number;
+  outputTokens: number;
+}
+
 async function callModel(
   messages: Anthropic.MessageParam[],
   locale: "pt-BR" | "en",
-): Promise<Pick[]> {
+): Promise<ModelCall> {
   const response = await getClient().messages.create({
     model: RECOMMEND_MODEL,
     max_tokens: 2048,
@@ -51,6 +67,11 @@ async function callModel(
     tool_choice: { type: "tool", name: "recommend_rackets" },
     messages,
   });
+
+  const usage = {
+    inputTokens: response.usage.input_tokens,
+    outputTokens: response.usage.output_tokens,
+  };
 
   const toolUse = response.content.find(
     (b): b is Anthropic.ToolUseBlock => b.type === "tool_use",
@@ -65,10 +86,13 @@ async function callModel(
       `Tool output failed validation: ${parsed.error.message}`,
     );
   }
-  return parsed.data.recommendations.map((r) => ({
-    racketId: r.racket_id,
-    justification: r.justification,
-  }));
+  return {
+    ...usage,
+    picks: parsed.data.recommendations.map((r) => ({
+      racketId: r.racket_id,
+      justification: r.justification,
+    })),
+  };
 }
 
 function validatePicks(picks: Pick[], validIds: Set<string>): string[] {
@@ -87,14 +111,29 @@ export async function recommend(
   candidates: Racket[],
   answers: Answers,
   locale: "pt-BR" | "en",
-): Promise<Pick[]> {
+): Promise<RecommendResult> {
   const validIds = new Set(candidates.map((r) => r.id));
   const userMessage = buildUserMessage(candidates, answers);
   const messages: Anthropic.MessageParam[] = [
     { role: "user", content: userMessage },
   ];
 
-  let picks = await callModel(messages, locale);
+  const startedAt = Date.now();
+  let inputTokens = 0;
+  let outputTokens = 0;
+  const result = (picks: Pick[]): RecommendResult => ({
+    picks,
+    model: RECOMMEND_MODEL,
+    inputTokens,
+    outputTokens,
+    latencyMs: Date.now() - startedAt,
+  });
+
+  let call = await callModel(messages, locale);
+  inputTokens += call.inputTokens;
+  outputTokens += call.outputTokens;
+
+  let picks = call.picks;
   let invalid = validatePicks(picks, validIds);
   if (invalid.length > 0) {
     // One corrective retry: restate the valid ids and ask again.
@@ -108,7 +147,11 @@ export async function recommend(
         content: `Some racket_id values were not in the candidate list. Pick again using ONLY these exact ids, no duplicates: ${[...validIds].join(", ")}`,
       },
     );
-    picks = await callModel(messages, locale);
+    call = await callModel(messages, locale);
+    inputTokens += call.inputTokens;
+    outputTokens += call.outputTokens;
+
+    picks = call.picks;
     invalid = validatePicks(picks, validIds);
     if (invalid.length > 0) {
       throw new RecommendationError(
@@ -117,5 +160,5 @@ export async function recommend(
     }
   }
 
-  return picks.slice(0, 3);
+  return result(picks.slice(0, 3));
 }

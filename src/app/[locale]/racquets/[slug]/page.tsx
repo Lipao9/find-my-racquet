@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPathname, Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { buyUrl, outboundRel } from "@/lib/affiliate";
+import { outboundRel, trackedUrl } from "@/lib/affiliate";
 import { findRelated, getRacketBySlug, loadCatalog } from "@/lib/catalog";
 import { absoluteUrl } from "@/lib/site";
 import { racketTraits } from "@/lib/traits";
@@ -65,7 +65,9 @@ export default async function RacquetPage({
   const name = `${racket.brand} ${racket.model}`;
   const related = findRelated(racket);
   const traits = racketTraits(racket);
-  const href = buyUrl(racket);
+  // Through the click-tracking redirect rather than straight to the store, so
+  // this statically generated page still reports which racquets get clicked.
+  const href = `${trackedUrl(racket.id, "racquet_page")}&locale=${locale}`;
   const { canonical } = alternatesFor(`/racquets/${slug}`, locale as Locale);
 
   const specs: { label: string; value: string }[] = [

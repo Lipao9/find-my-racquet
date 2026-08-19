@@ -50,6 +50,17 @@ export function outboundRel(): string {
   return isAffiliateEnabled() ? AFFILIATE_REL : PLAIN_REL;
 }
 
+export type ClickSource = "results" | "racquet_page";
+
+/**
+ * Internal href that records the click before bouncing to the store. Every
+ * outbound link goes through this so "which racquets do people actually click"
+ * is answerable; /api/ is disallowed in robots.txt, so crawlers never follow it.
+ */
+export function trackedUrl(racketId: string, source: ClickSource): string {
+  return `/api/go/${encodeURIComponent(racketId)}?src=${source}`;
+}
+
 export function buyUrl(racket: Pick<Racket, "productUrl">): string {
   const { param, value, template } = config();
   if (template) {

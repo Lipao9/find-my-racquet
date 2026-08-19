@@ -36,6 +36,43 @@ Quando ativo, os links saem com `rel="sponsored nofollow noopener noreferrer"`. 
 `buyUrl` das recomendações é montado no servidor (`/api/recommend`) para a config
 não chegar ao bundle do cliente.
 
+## Banco de dados (opcional)
+
+Postgres via Drizzle, usado só para medição — **sem `DATABASE_URL` o app roda
+igual**: as gravações viram no-op e o rate limit cai para um contador em memória.
+
+Tabelas: `quiz_runs` (perfil, status, modelo, tokens, latência), `recommendations`
+(as 3 escolhas), `outbound_clicks` (raquete, loja, origem) e `rate_limits`.
+A coluna `merchant` existe desde o início para uma segunda loja não exigir migração.
+
+```bash
+# Postgres local descartável
+docker run -d --name fmr-pg -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=findmyracquet \
+  -p 55432:5432 postgres:16-alpine
+export DATABASE_URL="postgresql://postgres:dev@localhost:55432/findmyracquet"
+
+npm run db:migrate    # aplica drizzle/*.sql
+npm run db:generate   # gera migração nova depois de mexer no schema
+npm run db:studio     # UI para inspecionar os dados
+```
+
+Na Vercel, use a connection string **pooled** da Neon (host com `-pooler`): cada
+invocação serverless abre sua própria conexão e o endpoint direto esgota rápido.
+
+## Rate limiting
+
+`/api/recommend` gasta uma chamada paga à Anthropic por request, então tem duas
+janelas: por IP (padrão 10/hora) e global (padrão 500/dia). A global é a que
+limita o prejuízo máximo. Responde `429` com `Retry-After`. Configurável por
+`RATE_LIMIT_*` no `.env`.
+
+## Rastreamento de cliques
+
+Todo link de saída passa por `/api/go/[racketId]`, que grava o clique e devolve
+`302` para a loja. O destino vem só do catálogo — nunca de query param — então
+não é um open redirect. `/api/` está bloqueado no robots.txt, então crawler
+nenhum segue esses links.
+
 ## Rodando
 
 ```bash
