@@ -45,25 +45,43 @@ Tabelas: `quiz_runs` (perfil, status, modelo, tokens, latência), `recommendatio
 (as 3 escolhas), `outbound_clicks` (raquete, loja, origem) e `rate_limits`.
 A coluna `merchant` existe desde o início para uma segunda loja não exigir migração.
 
-`db:migrate` e `db:studio` leem o `DATABASE_URL` do `.env.local` (que é
-gitignored), então a senha do banco não precisa passar pela linha de comando:
+### Dois bancos, dois arquivos
+
+Desenvolvimento **nunca** deve escrever no banco de produção — dados de teste
+misturados com uso real tornam a medição inútil. Por isso a connection string
+vive em dois arquivos, ambos gitignored:
+
+| Arquivo | Aponta para | Quem usa |
+| --- | --- | --- |
+| `.env.local` | Postgres local (docker) | `next dev`, `db:migrate`, `db:studio` |
+| `.env.production.local` | Neon, string **direct** | só `db:migrate:prod` |
+
+O nome do script é a proteção: não existe jeito de tocar produção sem digitar
+`prod`.
 
 ```bash
-# Postgres local descartável
-docker run -d --name fmr-pg -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=findmyracquet \
-  -p 55432:5432 postgres:16-alpine
-echo 'DATABASE_URL=postgresql://postgres:dev@localhost:55432/findmyracquet' >> .env.local
-
-npm run db:migrate    # aplica drizzle/*.sql
+npm run db:up         # sobe/religa o Postgres local (volume nomeado, dados persistem)
+npm run db:migrate    # aplica drizzle/*.sql no LOCAL
 npm run db:generate   # gera migração nova depois de mexer no schema
-npm run db:studio     # UI para inspecionar os dados
+npm run db:studio     # UI para inspecionar o banco local
+
+npm run db:migrate:prod   # aplica na Neon — falha se .env.production.local não existir
 ```
 
-Para migrar o banco de produção, troque o valor no `.env.local` pela connection
-string **direct** da Neon (a pooled é só para a aplicação em runtime).
+`db:migrate:prod` usa `--env-file` (não `--if-exists`) de propósito: sem o
+arquivo, ele quebra em vez de silenciosamente migrar o banco errado.
 
-Na Vercel, use a connection string **pooled** da Neon (host com `-pooler`): cada
-invocação serverless abre sua própria conexão e o endpoint direto esgota rápido.
+### Pooled vs direct
+
+A Neon dá duas connection strings e usar a errada é um erro difícil de achar,
+porque só aparece sob carga:
+
+- **pooled** (host com `-pooler`) → é a que vai no `DATABASE_URL` da Vercel.
+  Cada invocação serverless abre sua própria conexão e o endpoint direto esgota.
+- **direct** → migrações, e nada mais.
+
+Configure `DATABASE_URL` na Vercel **só em Production**. Sem ela nos previews, os
+deploys de PR rodam no caminho degradado e não sujam os dados reais.
 
 ## Rate limiting
 

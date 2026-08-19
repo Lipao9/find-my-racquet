@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "scrape": "tsx scripts/scrape.ts",
+    "db:up": "docker start fmr-pg || docker run -d --name fmr-pg --restart unless-stopped -e POSTGRES_PASSWORD=dev -e POSTGRES_DB=findmyracquet -p 55432:5432 -v fmr-pg-data:/var/lib/postgresql/data postgres:16-alpine",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file-if-exists=.env.local node_modules/drizzle-kit/bin.cjs migrate",
-    "db:studio": "node --env-file-if-exists=.env.local node_modules/drizzle-kit/bin.cjs studio"
+    "db:studio": "node --env-file-if-exists=.env.local node_modules/drizzle-kit/bin.cjs studio",
+    "db:migrate:prod": "node --env-file=.env.production.local node_modules/drizzle-kit/bin.cjs migrate"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
