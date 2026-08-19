@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -34,33 +34,63 @@ export function ResultsView({
   const t = useTranslations("results");
   const locale = useLocale();
   const [state, setState] = useState<State>({ status: "loading" });
+  // Only the retry button writes this. Bumping it re-runs the effect, which is
+  // what lets a retry exist without the effect depending on a callback that has
+  // to be recreated on every answers change.
+  const [attempt, setAttempt] = useState(0);
 
-  const fetchRecommendations = useCallback(async () => {
-    setState({ status: "loading" });
-    try {
-      const res = await fetch("/api/recommend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ answers, locale, mode }),
-      });
-      if (res.status === 422) {
-        setState({ status: "error", kind: "no_candidates" });
-        return;
-      }
-      if (!res.ok) {
-        setState({ status: "error", kind: "failed" });
-        return;
-      }
-      const data = await res.json();
-      setState({ status: "success", recommendations: data.recommendations });
-    } catch {
-      setState({ status: "error", kind: "failed" });
-    }
-  }, [answers, locale, mode]);
+  // Serialised, and the effect keys off the string rather than the objects.
+  // `answers` arrives as a prop deserialised from the server component, so an
+  // equal-but-new object identity would otherwise re-run the effect and spend a
+  // second paid Anthropic request for the same quiz.
+  const body = useMemo(
+    () => JSON.stringify({ answers, locale, mode }),
+    [answers, locale, mode],
+  );
 
   useEffect(() => {
-    fetchRecommendations();
-  }, [fetchRecommendations]);
+    // Without this, a request still in flight when the effect is cleaned up
+    // (StrictMode's double mount in dev, or a navigation away) resolves later and
+    // writes state belonging to a run nobody is looking at any more.
+    const controller = new AbortController();
+
+    // Declared inside the effect and invoked immediately, so no `setState` runs
+    // synchronously in the effect body — that is the cascading render the initial
+    // `useState({status:"loading"})` already covers, since mount is always
+    // loading and only a retry needs to go back to it.
+    void (async () => {
+      try {
+        const res = await fetch("/api/recommend", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body,
+          signal: controller.signal,
+        });
+        if (res.status === 422) {
+          setState({ status: "error", kind: "no_candidates" });
+          return;
+        }
+        if (!res.ok) {
+          setState({ status: "error", kind: "failed" });
+          return;
+        }
+        const data = await res.json();
+        setState({ status: "success", recommendations: data.recommendations });
+      } catch {
+        // An abort is this effect being torn down, not a failure worth showing.
+        if (controller.signal.aborted) return;
+        setState({ status: "error", kind: "failed" });
+      }
+    })();
+
+    return () => controller.abort();
+  }, [body, attempt]);
+
+  // In an event handler, so setting loading here is not a cascading render.
+  const retry = useCallback(() => {
+    setState({ status: "loading" });
+    setAttempt((n) => n + 1);
+  }, []);
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-6 py-10">
@@ -93,7 +123,7 @@ export function ResultsView({
               : t("errorHint")}
           </p>
           {state.kind === "failed" ? (
-            <Button onClick={fetchRecommendations}>{t("retry")}</Button>
+            <Button onClick={retry}>{t("retry")}</Button>
           ) : (
             <Button nativeButton={false} render={<Link href="/quiz" />}>
               {t("retake")}
