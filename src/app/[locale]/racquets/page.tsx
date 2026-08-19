@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { CourtLines } from "@/components/CourtLines";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -67,32 +69,39 @@ export default async function RacquetsIndexPage({
           </Button>
         </header>
 
-        {groups.map(({ brand, rackets }) => (
-          <section key={brand} className="flex flex-col gap-3">
-            <div className="flex items-baseline justify-between gap-4 border-b border-border/60 pb-2">
-              <h2 className="font-heading text-2xl font-semibold">{brand}</h2>
-              <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                {t("models", { count: rackets.length })}
-              </span>
-            </div>
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {rackets.map((racket) => (
-                <li key={racket.id}>
-                  <Link
-                    href={`/racquets/${racket.id}`}
-                    className="flex h-full flex-col gap-1 rounded-lg px-3 py-2.5 transition-colors hover:bg-accent/40"
-                  >
-                    <span className="font-medium">{racket.model}</span>
-                    <span className="text-xs text-muted-foreground tabular-nums">
-                      {racket.headSizeIn2} in² · {racket.weightGrams} g ·{" "}
-                      {racket.stringPattern}
-                      {racket.stiffnessRA !== null && ` · RA ${racket.stiffnessRA}`}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+        {groups.map(({ brand, rackets }, index) => (
+          <Fragment key={brand}>
+            <section className="flex flex-col gap-3">
+              <div className="flex items-baseline justify-between gap-4 border-b border-border/60 pb-2">
+                <h2 className="font-heading text-2xl font-semibold">{brand}</h2>
+                <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                  {t("models", { count: rackets.length })}
+                </span>
+              </div>
+              <ul className="grid gap-2 sm:grid-cols-2">
+                {rackets.map((racket) => (
+                  <li key={racket.id}>
+                    <Link
+                      href={`/racquets/${racket.id}`}
+                      className="flex h-full flex-col gap-1 rounded-lg px-3 py-2.5 transition-colors hover:bg-accent/40"
+                    >
+                      <span className="font-medium">{racket.model}</span>
+                      <span className="text-xs text-muted-foreground tabular-nums">
+                        {racket.headSizeIn2} in² · {racket.weightGrams} g ·{" "}
+                        {racket.stringPattern}
+                        {racket.stiffnessRA !== null &&
+                          ` · RA ${racket.stiffnessRA}`}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+            {/* One in-feed unit after the first brand, not between every group:
+                the page is a long list, and a slot per group would read as a
+                wall of ads and trip AdSense's "more ads than content" rule. */}
+            {index === 0 && <AdSlot placement="catalog_infeed" />}
+          </Fragment>
         ))}
       </div>
 

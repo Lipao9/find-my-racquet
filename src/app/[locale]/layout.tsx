@@ -5,6 +5,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { siteUrl } from "@/lib/site";
+import { AdsenseLoader } from "@/components/ads/AdsenseLoader";
+import { ConsentBanner } from "@/components/ads/ConsentBanner";
 import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
 
@@ -40,11 +42,11 @@ export async function generateMetadata({
     metadataBase: new URL(siteUrl()),
     title: {
       default: t("metaTitle"),
-      template: "%s · Find My Racquet",
+      template: "%s · RaqMatch",
     },
     description: t("metaDescription"),
     openGraph: {
-      siteName: "Find My Racquet",
+      siteName: "RaqMatch",
       type: "website",
       locale,
     },
@@ -73,6 +75,10 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
           {children}
+          {/* Both opt themselves out on ad-free routes — see AdsenseLoader. The
+              layout has no pathname, so it cannot make that call here. */}
+          <AdsenseLoader />
+          <ConsentBanner />
           <Toaster />
         </NextIntlClientProvider>
       </body>

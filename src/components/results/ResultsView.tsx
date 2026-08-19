@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "@/i18n/navigation";
@@ -157,6 +158,11 @@ export function ResultsView({
               </div>
             ))}
           </div>
+          {/* Only in the success branch: an ad beside loading skeletons or an
+              error message is the worst possible moment to ask for attention.
+              Placed after all three cards, so every affiliate button has already
+              had its chance at the click. */}
+          <AdSlot placement="results_below_picks" format="banner" />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ShareButton />
             <Button

@@ -1,4 +1,4 @@
-# Find My Racquet
+# RaqMatch
 
 Quiz bilíngue (pt-BR/en) para tenistas: responda 12 perguntas e receba 3 raquetes recomendadas pelo Claude, com justificativas no seu idioma.
 
@@ -35,6 +35,67 @@ AFFILIATE_URL_TEMPLATE='https://rede/click?url={url}'  # wrapper da rede; {url} 
 Quando ativo, os links saem com `rel="sponsored nofollow noopener noreferrer"`. O
 `buyUrl` das recomendações é montado no servidor (`/api/recommend`) para a config
 não chegar ao bundle do cliente.
+
+## Anúncios (Google AdSense)
+
+`src/lib/ads.ts` é a única fonte de verdade. **Sem `NEXT_PUBLIC_ADSENSE_CLIENT_ID`
+nada acontece**: o script não carrega, nenhum slot renderiza, `/ads.txt` dá 404 e o
+banner de consentimento não aparece.
+
+```bash
+NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-...   # habilita o loader, /ads.txt e o banner
+NEXT_PUBLIC_ADSENSE_SLOT_HOME=...          # um id por posição; sem id, a posição não renderiza
+NEXT_PUBLIC_ADSENSE_SLOT_CATALOG=...
+NEXT_PUBLIC_ADSENSE_SLOT_RACQUET=...
+NEXT_PUBLIC_ADSENSE_SLOT_RESULTS=...
+```
+
+Como são `NEXT_PUBLIC_*`, os valores são **embutidos no build**. Trocar um id no
+painel da Vercel não tem efeito até um novo build (`vercel redeploy`) — mesma
+pegadinha do `NEXT_PUBLIC_SITE_URL`.
+
+### Onde o anúncio pode aparecer
+
+| Rota | Posição | Por quê |
+| --- | --- | --- |
+| `/` | abaixo do hero | fora da primeira dobra, não disputa com o CTA do quiz |
+| `/racquets` | in-feed, após a 1ª marca | um só, para não virar parede de anúncio |
+| `/racquets/[slug]` | após a tabela de specs | bem abaixo do botão de compra |
+| `/results` | após as 3 recomendações | depois de todos os CTAs de afiliado |
+| `/quiz`, `/privacy` | **nunca** | ver `AD_FREE_PREFIXES` |
+
+`AD_FREE_PREFIXES` não é documentação, é regra: o `AdSlot` consulta a lista e se
+recusa a renderizar (com aviso no console em dev), e o loader nem é baixado nessas
+rotas. Isso importa porque o **Auto Ads do Google injeta unidades próprias em
+qualquer página que carregue a biblioteca** — bloquear o script é a única garantia
+que não depende de configuração no painel. **Desligue o Auto Ads no AdSense**, ou
+ele sobrepõe as escolhas da tabela acima em todas as outras rotas.
+
+O motivo econômico da política: um clique de afiliado numa raquete de R$ 1.500 a 16%
+no Mercado Livre vale da ordem de mil impressões de AdSense neste nicho. Por isso
+anúncio nenhum entra antes de um CTA de afiliado.
+
+### Consentimento (LGPD)
+
+`src/lib/consent.ts` guarda a escolha em `localStorage` (não cookie — não fragmenta
+o cache das páginas estáticas). Três estados: aceitou → anúncios personalizados;
+recusou ou ainda não escolheu → `requestNonPersonalizedAds = 1`, ou seja, anúncio
+contextual sem perfilamento. Recusar não remove o anúncio, então o banner não
+bloqueia a página e os dois botões têm o mesmo peso.
+
+**Isto não é uma CMP certificada do IAB TCF**, e o Google exige uma para servir
+anúncios a visitantes do EEE/Reino Unido. Quando `/en` começar a receber tráfego
+europeu de verdade, `src/lib/consent.ts` é o ponto de troca — os componentes só
+pedem um tri-state a ele.
+
+### Antes de pedir aprovação no AdSense
+
+- `/privacy` existe, está no sitemap e é linkada do rodapé de toda página (requisito).
+- `NEXT_PUBLIC_CONTACT_EMAIL` precisa ser um endereço que **realmente receba**
+  e-mail; o default é `contato@raqmatch.com`.
+- `/ads.txt` responde com o publisher id (confira depois do primeiro deploy).
+- Considere adicionar páginas "Sobre" e "Contato" — não são obrigatórias como a de
+  privacidade, mas ajudam na revisão.
 
 ## Banco de dados (opcional)
 

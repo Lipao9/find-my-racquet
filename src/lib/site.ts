@@ -20,3 +20,13 @@ export function siteUrl(): string {
 export function absoluteUrl(path: string): string {
   return new URL(path, siteUrl()).toString();
 }
+
+/**
+ * Address people use to exercise their LGPD rights. Env-driven so the policy page
+ * never hardcodes a personal mailbox, with a default on the domain we own — set
+ * up forwarding for it before the policy goes live, since an unreachable contact
+ * fails both LGPD art. 18 and AdSense review.
+ */
+export function contactEmail(): string {
+  return process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "contato@raqmatch.com";
+}

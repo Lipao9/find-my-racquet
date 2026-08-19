@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { CourtLines } from "@/components/CourtLines";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -233,6 +234,11 @@ export default async function RacquetPage({
             ))}
           </dl>
         </section>
+
+        {/* After the spec table, which is what organic visitors came for, and
+            well below the buy button in the header — the affiliate click is worth
+            orders of magnitude more than the impression. */}
+        <AdSlot placement="racquet_below_specs" />
 
         <Card className="border-primary/30 bg-accent/30">
           <CardContent className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">

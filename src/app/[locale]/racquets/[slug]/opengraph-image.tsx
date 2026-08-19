@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getRacketBySlug, loadCatalog } from "@/lib/catalog";
 
-export const alt = "Find My Racquet — racquet specs";
+export const alt = "RaqMatch — racquet specs";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,6 +22,18 @@ const INK = "#22303f";
 const TERRACOTTA = "#b65f3c";
 const MUTED = "#5c6a80";
 const BORDER = "#e3dcd2";
+
+// The brand mark, as a data URI. Satori renders `<img>` reliably but supports only
+// a subset of inline SVG, so the mark travels as an image rather than as elements.
+// Geometry is kept in sync with src/components/BrandLogo.tsx by hand.
+const MARK = `data:image/svg+xml;base64,${Buffer.from(
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">` +
+    `<g stroke="${TERRACOTTA}" stroke-width="1.6" opacity="0.8">` +
+    `<path d="M10 8.12V23.88"/><path d="M13.5 5.48V26.52"/>` +
+    `<path d="M18.5 5.48V26.52"/><path d="M22 8.12V23.88"/>` +
+    `<path d="M8.79 10H23.21"/><path d="M7.4 16H24.6"/><path d="M8.79 22H23.21"/></g>` +
+    `<ellipse cx="16" cy="16" rx="8.6" ry="11" stroke="${TERRACOTTA}" stroke-width="3"/></svg>`,
+).toString("base64")}`;
 
 export default async function Image({
   params,
@@ -77,14 +89,8 @@ export default async function Image({
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              width: 16,
-              height: 16,
-              borderRadius: 999,
-              background: TERRACOTTA,
-            }}
-          />
+          {/* Satori renders into a PNG, so next/image would be meaningless here. */}
+          <img src={MARK} width={32} height={32} alt="" />
           <span
             style={{
               fontSize: 24,
@@ -93,7 +99,7 @@ export default async function Image({
               color: MUTED,
             }}
           >
-            Find My Racquet
+            RaqMatch
           </span>
         </div>
 

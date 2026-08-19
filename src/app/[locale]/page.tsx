@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CourtLines } from "@/components/CourtLines";
+import { AdSlot } from "@/components/ads/AdSlot";
 
 // Title and description come from the locale layout; this only pins the
 // canonical and hreflang set for the locale root.
@@ -82,6 +83,10 @@ export default function LandingPage({ params }: PageProps<"/[locale]">) {
           ))}
         </dl>
       </section>
+      {/* Outside the hero section, so it lands below the fold on any viewport
+          that fits the CTA: the hero is `flex-1` and centred, which pushes this
+          past the first screen instead of competing with "Start the quiz". */}
+      <AdSlot placement="home_below_hero" format="banner" className="px-6 pb-12" />
       <SiteFooter />
     </main>
   );
