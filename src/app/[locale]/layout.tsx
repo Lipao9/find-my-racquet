@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { siteUrl } from "@/lib/site";
 import { AdsenseLoader } from "@/components/ads/AdsenseLoader";
 import { ConsentBanner } from "@/components/ads/ConsentBanner";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
 
@@ -75,6 +76,9 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider>
           {children}
+          {/* Measurement runs everywhere, including the ad-free routes — see
+              GoogleAnalytics for why it does not follow the ad policy. */}
+          <GoogleAnalytics />
           {/* Both opt themselves out on ad-free routes — see AdsenseLoader. The
               layout has no pathname, so it cannot make that call here. */}
           <AdsenseLoader />
